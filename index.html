@@ -31,86 +31,6 @@
     footer {
       flex-shrink: 0;
     }
-
-    /* AI Chat Bubble Styles */
-    #chatBubble {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: #0d6efd;
-      color: white;
-      border-radius: 50%;
-      width: 60px;
-      height: 60px;
-      text-align: center;
-      line-height: 60px;
-      font-size: 30px;
-      cursor: pointer;
-      z-index: 9999;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    }
-
-    #chatWindow {
-      display: none;
-      position: fixed;
-      bottom: 90px;
-      right: 20px;
-      width: 350px;
-      max-height: 450px;
-      background-color: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-      z-index: 9999;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-
-    #chatHeader {
-      background-color: #0d6efd;
-      color: white;
-      padding: 10px;
-      font-weight: bold;
-      text-align: center;
-    }
-
-    #chatMessages {
-      flex: 1;
-      padding: 10px;
-      overflow-y: auto;
-      font-size: 14px;
-    }
-
-    #chatInputContainer {
-      display: flex;
-      border-top: 1px solid #ddd;
-    }
-
-    #chatInput {
-      flex: 1;
-      padding: 8px;
-      border: none;
-      outline: none;
-    }
-
-    #chatSend {
-      background-color: #0d6efd;
-      color: white;
-      border: none;
-      padding: 0 15px;
-      cursor: pointer;
-    }
-
-    .userMessage {
-      text-align: right;
-      margin-bottom: 5px;
-      font-weight: bold;
-    }
-
-    .botMessage {
-      text-align: left;
-      margin-bottom: 5px;
-    }
   </style>
 </head>
 <body>
@@ -243,20 +163,6 @@
   </div>
 </footer>
 
-<!-- AI Chat Bubble -->
-<div id="chatBubble">💬</div>
-
-<div id="chatWindow">
-  <div id="chatHeader">Ask Lee!</div>
-  <div id="chatMessages">
-    <div class="botMessage">Hi! Ask me about any service, pricing, or vehicle issue.</div>
-  </div>
-  <div id="chatInputContainer">
-    <input type="text" id="chatInput" placeholder="Type your message...">
-    <button id="chatSend">Send</button>
-  </div>
-</div>
-
 <!-- JS -->
 <script src="https://r.mobirisesite.com/1997632/assets/web/assets/jquery/jquery.min.js?rnd=1764132528697"></script>
 <script src="https://r.mobirisesite.com/1997632/assets/bootstrap/js/bootstrap.bundle.min.js?rnd=1764132528697"></script>
@@ -264,68 +170,6 @@
 <script src="https://r.mobirisesite.com/1997632/assets/ytplayer/index.js?rnd=1764132528697"></script>
 <script src="https://r.mobirisesite.com/1997632/assets/dropdown/js/navbar-dropdown.js?rnd=1764132528697"></script>
 <script src="https://r.mobirisesite.com/1997632/assets/theme/js/script.js?rnd=1764132528697"></script>
-
-<script>
-  const chatBubble = document.getElementById('chatBubble');
-  const chatWindow = document.getElementById('chatWindow');
-  const chatMessages = document.getElementById('chatMessages');
-  const chatInput = document.getElementById('chatInput');
-  const chatSend = document.getElementById('chatSend');
-
-  chatBubble.addEventListener('click', () => {
-    chatWindow.style.display = chatWindow.style.display === 'flex' ? 'none' : 'flex';
-  });
-
-  function addMessage(message, sender) {
-    const div = document.createElement('div');
-    div.textContent = message;
-    div.className = sender === 'user' ? 'userMessage' : 'botMessage';
-    chatMessages.appendChild(div);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-  }
-
-  function getBotReply(message) {
-    message = message.toLowerCase();
-    const services = {
-      "diagnostic": "Full vehicle diagnostic scan ($35–$40), check engine troubleshooting ($25–$50), electrical/starting diagnostics ($45–$80).",
-      "suspension": "Shocks, struts, control arms, ball joints, tie rods: $60–$150 depending on service.",
-      "brake": "Brake pads, rotors, calipers, hoses, fluid flush: $40–$150 depending on service.",
-      "exhaust": "Muffler, catalytic converter, piping, oxygen sensors: $35–$150.",
-      "engine": "Alternator, starter, battery, radiator, water pump, belts, thermostat, head gasket, engine overhaul: $25–$1000 depending on service.",
-      "fuel": "Fuel pump, filter, injectors, carburetor/EFI service: $20–$250 depending on service.",
-      "maintenance": "Oil change, tune-up, spark plugs, filters, fluid top-off: $20–$85.",
-      "roadside": "Jump-start ($25–$35), battery testing ($15–$30), lockouts ($40–$70), tire service ($80–$135), emergency diagnostic ($60–$85).",
-      "sensors": "O2, MAF, wiring, ECU/computer diagnostics: $35–$200 depending on service."
-    };
-
-    for (let key in services) {
-      if (message.includes(key)) return services[key] + " Prices vary depending on vehicle year, make, and model.";
-    }
-
-    if (message.includes('price') || message.includes('cost') || message.includes('pricing')) {
-      return "All labor prices vary depending on your vehicle's year, make, and model.";
-    }
-    if (message.includes('hello') || message.includes('hi') || message.includes('hey')) {
-      return "Hello! I’m Lee, your mobile mechanic. Ask me anything about your car!";
-    }
-    return "Thanks for your question! I can help with diagnostics, maintenance, brakes, AC, tires, and more. Prices depend on vehicle year, make, and model.";
-  }
-
-  chatSend.addEventListener('click', () => {
-    const message = chatInput.value.trim();
-    if (!message) return;
-    addMessage(message, 'user');
-    chatInput.value = '';
-    setTimeout(() => {
-      const reply = getBotReply(message);
-      addMessage(reply, 'bot');
-    }, 500);
-  });
-
-  chatInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') chatSend.click();
-  });
-</script>
 
 </body>
 </html>
