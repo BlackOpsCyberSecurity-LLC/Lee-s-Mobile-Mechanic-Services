@@ -9,54 +9,60 @@
   <title>Home</title>
 
   <!-- CSS -->
-  <link rel="stylesheet" href="https://r.mobirisesite.com/1997632/assets/bootstrap/css/bootstrap.min.css?rnd=1764132528697">
-  <link rel="stylesheet" href="https://r.mobirisesite.com/1997632/assets/dropdown/css/style.css?rnd=1764132528697">
-  <link rel="stylesheet" href="https://r.mobirisesite.com/1997632/assets/animatecss/animate.css?rnd=1764132528697">
-  <link rel="stylesheet" href="https://r.mobirisesite.com/1997632/assets/theme/css/style.css?rnd=1764132528697">
-  <link rel="preload" href="https://fonts.googleapis.com/css?family=Inter+Tight:100,200,300,400,500,600,700,800,900,100i,200i,300i,400i,500i,600i,700i,800i,900i&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="stylesheet" href="https://r.mobirisesite.com/1997632/assets/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://r.mobirisesite.com/1997632/assets/dropdown/css/style.css">
+  <link rel="stylesheet" href="https://r.mobirisesite.com/1997632/assets/animatecss/animate.css">
+  <link rel="stylesheet" href="https://r.mobirisesite.com/1997632/assets/theme/css/style.css">
+  <link rel="preload" href="https://fonts.googleapis.com/css?family=Inter+Tight:100,200,300,400,500,600,700,800,900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter+Tight:100,200,300,400,500,600,700,800,900,100i,200i,300i,400i,500i,600i,700i,800i,900i&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter+Tight:100,200,300,400,500,600,700,800,900&display=swap">
   </noscript>
-  <link rel="stylesheet" href="https://r.mobirisesite.com/1997632/assets/css/mbr-additional.css?rnd=1764132528697" type="text/css">
+  <link rel="stylesheet" href="https://r.mobirisesite.com/1997632/assets/css/mbr-additional.css" type="text/css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
   <style>
-    body {
+    body { display: flex; flex-direction: column; min-height: 100vh; }
+    main { flex: 1; }
+    footer { flex-shrink: 0; }
+
+    /* Text styling */
+    .intro-text, .service-text { line-height: 1.6; }
+    .service-text ul { padding-left: 1.2rem; }
+    .service-text li { margin-bottom: 0.8rem; }
+
+    /* Contact links */
+    .contact-link { color: #007BFF; text-decoration: underline; transition: color 0.3s; }
+    .contact-link:hover { color: #ffd700; text-decoration: none; }
+
+    /* Service banners */
+    .service-banner {
+      background-color: #000;
+      color: #fff;
+      padding: 0.6rem 1rem;
+      margin-top: 1rem;
+      margin-bottom: 0.5rem;
+      border-radius: 5px;
+      font-size: 1.2rem;
       display: flex;
-      flex-direction: column;
-      min-height: 100vh;
+      align-items: center;
     }
-    main {
-      flex: 1;
-    }
-    footer {
-      flex-shrink: 0;
-    }
-    /* Neat and professional text spacing */
-    .intro-text, .service-text {
-      letter-spacing: normal;
-      word-spacing: normal;
-      line-height: 1.6;
-    }
-    .service-text ul {
-      padding-left: 1.2rem;
-    }
-    .service-text li {
+    .service-banner i { margin-right: 0.6rem; }
+
+    /* Benefits highlight */
+    .benefit-item {
+      display: flex;
+      align-items: flex-start;
       margin-bottom: 0.8rem;
     }
-    /* Contact links */
-    .contact-link {
-      color: #007BFF; /* visible by default */
-      text-decoration: underline;
-      transition: color 0.3s;
+    .benefit-item i {
+      color: #28a745;
+      margin-right: 0.5rem;
+      margin-top: 2px;
     }
-    .contact-link:hover {
-      color: #ffd700; /* gold on hover */
-      text-decoration: none;
-    }
+    .benefit-list { margin-top: 0.8rem; }
   </style>
 </head>
 <body>
-
 <main>
 
 <!-- Navbar -->
@@ -67,7 +73,9 @@
         <span class="navbar-logo">
           <img src="https://r.mobirisesite.com/1997632/assets/images/shop3-h_mifa1ufz.jpg" alt="" style="height: 5rem;">
         </span>
-        <span class="navbar-caption-wrap"><a class="navbar-caption text-black text-primary display-4">Lee's Mobile Mechanic Service</a></span>
+        <span class="navbar-caption-wrap">
+          <a class="navbar-caption text-black text-primary display-4">Lee's Mobile Mechanic Service</a>
+        </span>
       </div>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbarSupportedContent" data-bs-target="#navbarSupportedContent" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <div class="hamburger"><span></span><span></span><span></span><span></span></div>
@@ -87,49 +95,92 @@
 
 <!-- Features Section -->
 <section data-bs-version="5.1" class="features030 cid-v3Capy1s1k" id="features030-1q">
-  <div class="mbr-overlay" style="opacity: 0; background-color: rgb(255, 255, 255);"></div>
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-12 content-head mb-5">
         <h1 class="mbr-section-title mbr-fonts-style mb-0 display-2">Why Choose Us?</h1>
       </div>
     </div>
+
     <div class="row justify-content-center blockContent">
       <div class="col-12 col-lg">
         <div class="item-wrapper align-left service-text">
+
           <p class="intro-text"><strong>
             Lee’s Mobile Mechanic Service delivers professional, high-quality automotive repair and maintenance directly to your home, workplace, or roadside. With certified-level experience, reliable tools, and a commitment to honest workmanship, I provide dealership-grade service without the dealership price or wait times. Whether it’s routine maintenance, diagnostics, or emergency breakdowns, you can count on fast response times, transparent pricing, and dependable repairs that keep you safely on the road.
           </strong></p>
 
-          <p><strong>Comprehensive Service List (pricing varies by vehicle make, model, and year):</strong></p>
+          <!-- Service Categories -->
+          <div class="service-banner"><i class="bi bi-tools"></i>Diagnostics & Electronics</div>
           <ul>
-            <li><strong>Diagnostics & Electronics:</strong> Full vehicle diagnostics, check engine light troubleshooting, pre-purchase inspections, electrical system diagnostics, starting & charging system repair, battery testing & replacement, ECU/computer diagnostics & programming, sensor replacement, wiring & harness repair.</li>
-            <li><strong>Engine Services:</strong> Oil changes, tune-ups & spark plugs, belts & pulleys, timing belt/chain replacement, cooling system repair, alternator & starter replacement, fuel system repair, engine overhaul, head gasket replacement, air intake & throttle body cleaning.</li>
-            <li><strong>Transmission & Drivetrain:</strong> Automatic & manual transmission service, clutch repair, differential & transfer case repair, CV joints & driveshaft repair, wheel bearings replacement.</li>
-            <li><strong>Brakes & Suspension:</strong> Brake pads, rotors, calipers, brake fluid flush, brake lines & hoses, shocks & struts, suspension components, steering system repair, alignment checks & adjustments.</li>
-            <li><strong>Cooling & HVAC:</strong> Radiator repair/replacement, hoses & coolant flush, heater core repair, AC recharge & troubleshooting, compressor replacement, condenser & evaporator repair.</li>
-            <li><strong>Tires & Wheels:</strong> Tire replacement & rotation, flat tire repair, wheel balancing, alignment.</li>
-            <li><strong>Exhaust & Emissions:</strong> Muffler, catalytic converter, piping replacement, oxygen sensor replacement, exhaust manifold repair.</li>
-            <li><strong>Roadside & Emergency:</strong> Jump-starts, battery replacement, lockouts, tire changes, emergency diagnostics, towing assistance coordination.</li>
-            <li><strong>Maintenance & Fluids:</strong> Fluids top-off & flushes, air filter & cabin filter replacement, fuel system cleaning, wiper blade replacement, light bulbs replacement.</li>
-            <li><strong>Miscellaneous:</strong> Trailer hitch installation, accessories installation, vehicle inspection & safety checks, preventive maintenance packages.</li>
+            <li>Full vehicle diagnostics, check engine light troubleshooting, pre-purchase inspections.</li>
+            <li>Electrical system diagnostics, starting & charging system repair, battery testing & replacement.</li>
+            <li>ECU/computer diagnostics & programming, sensor replacement, wiring & harness repair.</li>
+          </ul>
+
+          <div class="service-banner"><i class="bi bi-cpu"></i>Engine Services</div>
+          <ul>
+            <li>Oil changes, tune-ups & spark plugs, belts & pulleys, timing belt/chain replacement.</li>
+            <li>Cooling system repair, alternator & starter replacement, fuel system repair.</li>
+            <li>Engine overhaul, head gasket replacement, air intake & throttle body cleaning.</li>
+          </ul>
+
+          <div class="service-banner"><i class="bi bi-gear-fill"></i>Transmission & Drivetrain</div>
+          <ul>
+            <li>Automatic & manual transmission service, clutch repair.</li>
+            <li>Differential & transfer case repair, CV joints & driveshaft repair, wheel bearings replacement.</li>
+          </ul>
+
+          <div class="service-banner"><i class="bi bi-car-front-fill"></i>Brakes & Suspension</div>
+          <ul>
+            <li>Brake pads, rotors, calipers, brake fluid flush, brake lines & hoses.</li>
+            <li>Shocks & struts, suspension components, steering system repair, alignment checks & adjustments.</li>
+          </ul>
+
+          <div class="service-banner"><i class="bi bi-thermometer-half"></i>Cooling & HVAC</div>
+          <ul>
+            <li>Radiator repair/replacement, hoses & coolant flush, heater core repair.</li>
+            <li>AC recharge & troubleshooting, compressor replacement, condenser & evaporator repair.</li>
+          </ul>
+
+          <div class="service-banner"><i class="bi bi-tire"></i>Tires & Wheels</div>
+          <ul>
+            <li>Tire replacement & rotation, flat tire repair, wheel balancing, alignment.</li>
+          </ul>
+
+          <div class="service-banner"><i class="bi bi-wind"></i>Exhaust & Emissions</div>
+          <ul>
+            <li>Muffler, catalytic converter, piping replacement, oxygen sensor replacement, exhaust manifold repair.</li>
+          </ul>
+
+          <div class="service-banner"><i class="bi bi-lightning-fill"></i>Roadside & Emergency</div>
+          <ul>
+            <li>Jump-starts, battery replacement, lockouts, tire changes, emergency diagnostics, towing assistance coordination.</li>
+          </ul>
+
+          <div class="service-banner"><i class="bi bi-droplet-half"></i>Maintenance & Fluids</div>
+          <ul>
+            <li>Fluids top-off & flushes, air filter & cabin filter replacement, fuel system cleaning, wiper blade replacement, light bulbs replacement.</li>
           </ul>
 
           <p><strong>Why Customers Choose Me:</strong></p>
-          <ul>
-            <li>Fast response times — I come to you, fully equipped.</li>
-            <li>Professional workmanship — no shortcuts, no guesswork.</li>
-            <li>Honest pricing — clear quotes before any work begins.</li>
-            <li>Convenient service — no waiting rooms, no towing.</li>
-            <li>Trusted experience — real mechanical expertise, on-site.</li>
-          </ul>
+          <div class="benefit-list">
+            <div class="benefit-item"><i class="bi bi-check-circle-fill"></i>Fast response times — I come to you, fully equipped.</div>
+            <div class="benefit-item"><i class="bi bi-check-circle-fill"></i>Professional workmanship — no shortcuts, no guesswork.</div>
+            <div class="benefit-item"><i class="bi bi-check-circle-fill"></i>Honest pricing — clear quotes before any work begins.</div>
+            <div class="benefit-item"><i class="bi bi-check-circle-fill"></i>Convenient service — no waiting rooms, no towing.</div>
+            <div class="benefit-item"><i class="bi bi-check-circle-fill"></i>Trusted experience — real mechanical expertise, on-site.</div>
+          </div>
+
         </div>
       </div>
+
       <div class="col-12 col-lg-6">
         <div class="image-wrapper mb-4">
           <img class="w-100" src="https://r.mobirisesite.com/1997632/assets/images/gallery10-h_mifbcdak.jpg" alt="">
         </div>
       </div>
+
     </div>
   </div>
 </section>
@@ -177,12 +228,12 @@
 </footer>
 
 <!-- JS -->
-<script src="https://r.mobirisesite.com/1997632/assets/web/assets/jquery/jquery.min.js?rnd=1764132528697"></script>
-<script src="https://r.mobirisesite.com/1997632/assets/bootstrap/js/bootstrap.bundle.min.js?rnd=1764132528697"></script>
-<script src="https://r.mobirisesite.com/1997632/assets/smoothscroll/smooth-scroll.js?rnd=1764132528697"></script>
-<script src="https://r.mobirisesite.com/1997632/assets/ytplayer/index.js?rnd=1764132528697"></script>
-<script src="https://r.mobirisesite.com/1997632/assets/dropdown/js/navbar-dropdown.js?rnd=1764132528697"></script>
-<script src="https://r.mobirisesite.com/1997632/assets/theme/js/script.js?rnd=1764132528697"></script>
+<script src="https://r.mobirisesite.com/1997632/assets/web/assets/jquery/jquery.min.js"></script>
+<script src="https://r.mobirisesite.com/1997632/assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="https://r.mobirisesite.com/1997632/assets/smoothscroll/smooth-scroll.js"></script>
+<script src="https://r.mobirisesite.com/1997632/assets/ytplayer/index.js"></script>
+<script src="https://r.mobirisesite.com/1997632/assets/dropdown/js/navbar-dropdown.js"></script>
+<script src="https://r.mobirisesite.com/1997632/assets/theme/js/script.js"></script>
 
 </body>
 </html>
