@@ -30,6 +30,22 @@
       color: #ffd700; 
       text-decoration: none;
     }
+
+    /* Black banners for section headers with white text */
+    h4.section-banner {
+      background-color: #000;
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: 4px;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    /* Table headers match the black banner */
+    thead.table-dark th {
+      background-color: #000 !important;
+      color: #fff !important;
+    }
   </style>
 </head>
 <body>
@@ -78,14 +94,14 @@
         </h1>
         <p class="text-center text-muted mb-4"><em>Note: Prices vary depending on vehicle year, make, and model.</em></p>
 
-        <!-- Enhanced Labor Tables -->
+        <!-- Labor Tables -->
         <section class="container mt-4">
 
           <!-- Diagnostics -->
           <div class="mb-4">
-            <h4 class="bg-primary text-white p-2 rounded"><i class="bi bi-tools me-2"></i>Diagnostics</h4>
+            <h4 class="section-banner"><i class="bi bi-tools me-2"></i>Diagnostics</h4>
             <table class="table table-striped table-hover">
-              <thead class="table-primary">
+              <thead class="table-dark">
                 <tr><th>Service</th><th>Labor Cost</th></tr>
               </thead>
               <tbody>
@@ -98,8 +114,11 @@
 
           <!-- Suspension & Steering -->
           <div class="mb-4">
-            <h4 class="bg-success text-white p-2 rounded"><i class="bi bi-arrow-up-down me-2"></i>Suspension & Steering</h4>
+            <h4 class="section-banner"><i class="bi bi-arrow-up-down me-2"></i>Suspension & Steering</h4>
             <table class="table table-striped table-hover">
+              <thead class="table-dark">
+                <tr><th>Service</th><th>Labor Cost</th></tr>
+              </thead>
               <tbody>
                 <tr><td>Shocks / Struts</td><td>$90–$160</td></tr>
                 <tr><td>Control Arms / Bushings</td><td>$90–$160</td></tr>
@@ -112,8 +131,11 @@
 
           <!-- Brakes -->
           <div class="mb-4">
-            <h4 class="bg-danger text-white p-2 rounded"><i class="bi bi-car-front-fill me-2"></i>Brakes</h4>
+            <h4 class="section-banner"><i class="bi bi-car-front-fill me-2"></i>Brakes</h4>
             <table class="table table-striped table-hover">
+              <thead class="table-dark">
+                <tr><th>Service</th><th>Labor Cost</th></tr>
+              </thead>
               <tbody>
                 <tr><td>Brake Pads (Front or Rear)</td><td>$65–$110</td></tr>
                 <tr><td>Pads + Rotors</td><td>$90–$150</td></tr>
@@ -126,8 +148,11 @@
 
           <!-- Engine & Exhaust -->
           <div class="mb-4">
-            <h4 class="bg-warning text-dark p-2 rounded"><i class="bi bi-cpu-fill me-2"></i>Engine & Exhaust</h4>
+            <h4 class="section-banner"><i class="bi bi-cpu-fill me-2"></i>Engine & Exhaust</h4>
             <table class="table table-striped table-hover">
+              <thead class="table-dark">
+                <tr><th>Service</th><th>Labor Cost</th></tr>
+              </thead>
               <tbody>
                 <tr><td>Alternator Replacement</td><td>$70–$160</td></tr>
                 <tr><td>Starter Replacement</td><td>$70–$160</td></tr>
@@ -148,8 +173,11 @@
 
           <!-- Fuel & Maintenance -->
           <div class="mb-4">
-            <h4 class="bg-info text-white p-2 rounded"><i class="bi bi-fuel-pump me-2"></i>Fuel & Maintenance</h4>
+            <h4 class="section-banner"><i class="bi bi-fuel-pump me-2"></i>Fuel & Maintenance</h4>
             <table class="table table-striped table-hover">
+              <thead class="table-dark">
+                <tr><th>Service</th><th>Labor Cost</th></tr>
+              </thead>
               <tbody>
                 <tr><td>Fuel Pump Replacement</td><td>$150–$270</td></tr>
                 <tr><td>Fuel Filter Replacement</td><td>$25–$55</td></tr>
@@ -163,10 +191,13 @@
             </table>
           </div>
 
-          <!-- Roadside & Sensors -->
+          <!-- Roadside & Electrical -->
           <div class="mb-4">
-            <h4 class="bg-secondary text-white p-2 rounded"><i class="bi bi-gear-fill me-2"></i>Roadside & Electrical</h4>
+            <h4 class="section-banner"><i class="bi bi-gear-fill me-2"></i>Roadside & Electrical</h4>
             <table class="table table-striped table-hover">
+              <thead class="table-dark">
+                <tr><th>Service</th><th>Labor Cost</th></tr>
+              </thead>
               <tbody>
                 <tr><td>Jump-Start</td><td>$25–$35</td></tr>
                 <tr><td>Battery Testing</td><td>$15–$30</td></tr>
@@ -184,7 +215,7 @@
           </div>
 
         </section>
-        <!-- End Enhanced Labor Tables -->
+        <!-- End Labor Tables -->
 
       </div>
     </div>
