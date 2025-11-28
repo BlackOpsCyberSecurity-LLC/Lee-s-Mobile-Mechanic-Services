@@ -89,6 +89,7 @@
         <div class="col-12 mb-3">
           <label for="vin" class="form-label">VIN (Optional)</label>
           <input type="text" id="vin" name="vin" class="form-control" placeholder="Enter VIN to auto-fill vehicle info">
+          <button type="button" id="clearVin" class="btn btn-secondary mt-2">Clear VIN / Reset Vehicle Info</button>
         </div>
         <div class="col-md-4 mb-3">
           <label for="year" class="form-label">Year</label>
@@ -104,11 +105,11 @@
         </div>
       </div>
 
-      <!-- Services & Parts (unchanged) -->
+      <!-- Services & Parts unchanged -->
       <h4><i class="bi bi-tools"></i> Services Requested</h4>
       <div class="mb-3">
         <select id="services" name="services" class="form-select select2-multiple" multiple="multiple" style="width:100%">
-          <!-- Keep all your service options here -->
+          <!-- All your service options here -->
           <option>Full Vehicle Diagnostic Scan</option>
           <option>Check Engine Light Troubleshooting</option>
           <option>Electrical/Starting System Diagnostic</option>
@@ -160,7 +161,7 @@
       <h4><i class="bi bi-box-seam"></i> Parts Needed</h4>
       <div class="mb-3">
         <select id="parts" name="parts" class="form-select select2-multiple" multiple="multiple" style="width:100%">
-          <!-- Keep all your parts options here -->
+          <!-- All your parts options here -->
           <option>Brake Pads</option>
           <option>Rotors</option>
           <option>Brake Calipers</option>
@@ -211,22 +212,25 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function() {
   const yearSelect = document.getElementById("year");
   const makeSelect = document.getElementById("make");
   const modelSelect = document.getElementById("model");
   const vinInput = document.getElementById("vin");
+  const clearVinBtn = document.getElementById("clearVin");
 
   fetch("vehicles_us.json")
     .then(res => res.json())
     .then(vehicleData => {
-      // Populate years
-      const years = Array.from(new Set(vehicleData.map(v => v.Year))).sort((a,b)=>b-a);
-      years.forEach(year=>{
-        let opt=document.createElement("option"); opt.value=year; opt.textContent=year; yearSelect.appendChild(opt);
+      // Populate Year dropdown
+      const years = Array.from(new Set(vehicleData.map(v=>v.Year))).sort((a,b)=>b-a);
+      years.forEach(y=>{
+        let opt = document.createElement("option");
+        opt.value = y; opt.textContent = y;
+        yearSelect.appendChild(opt);
       });
 
-      // Initialize Select2
+      // Initialize Select2 after adding Year options
       $(yearSelect).select2({ theme:'bootstrap-5', placeholder:'Select Year', width:'100%' });
       $(makeSelect).select2({ theme:'bootstrap-5', placeholder:'Select Make', width:'100%' });
       $(modelSelect).select2({ theme:'bootstrap-5', placeholder:'Select Model', width:'100%' });
@@ -234,49 +238,64 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Year → Make
       yearSelect.addEventListener("change", function(){
-        const year=this.value;
-        makeSelect.innerHTML='<option value="">Select Make</option>';
-        modelSelect.innerHTML='<option value="">Select Model</option>';
-        if(!year) return;
-        const makes=Array.from(new Set(vehicleData.filter(v=>v.Year===year).map(v=>v.Make))).sort();
-        makes.forEach(make=>{ let opt=document.createElement("option"); opt.value=make; opt.textContent=make; makeSelect.appendChild(opt); });
-        $(makeSelect).trigger('change.select2');
+        const selectedYear = this.value;
+        makeSelect.innerHTML = '<option value="">Select Make</option>';
+        modelSelect.innerHTML = '<option value="">Select Model</option>';
+        if(!selectedYear) return;
+        const makes = Array.from(new Set(vehicleData.filter(v=>v.Year===selectedYear).map(v=>v.Make))).sort();
+        makes.forEach(make=>{
+          let opt = document.createElement("option"); opt.value = make; opt.textContent = make;
+          makeSelect.appendChild(opt);
+        });
+        $(makeSelect).select2('destroy').select2({ theme:'bootstrap-5', placeholder:'Select Make', width:'100%' });
       });
 
       // Make → Model
       makeSelect.addEventListener("change", function(){
-        const year=yearSelect.value;
-        const make=this.value;
-        modelSelect.innerHTML='<option value="">Select Model</option>';
-        if(!year||!make) return;
-        const models=Array.from(new Set(vehicleData.filter(v=>v.Year===year&&v.Make===make).map(v=>v.Model))).sort();
-        models.forEach(model=>{ let opt=document.createElement("option"); opt.value=model; opt.textContent=model; modelSelect.appendChild(opt); });
-        $(modelSelect).trigger('change.select2');
+        const selectedYear = yearSelect.value;
+        const selectedMake = this.value;
+        modelSelect.innerHTML = '<option value="">Select Model</option>';
+        if(!selectedYear || !selectedMake) return;
+        const models = Array.from(new Set(vehicleData.filter(v=>v.Year===selectedYear && v.Make===selectedMake).map(v=>v.Model))).sort();
+        models.forEach(model=>{
+          let opt = document.createElement("option"); opt.value = model; opt.textContent = model;
+          modelSelect.appendChild(opt);
+        });
+        $(modelSelect).select2('destroy').select2({ theme:'bootstrap-5', placeholder:'Select Model', width:'100%' });
       });
 
       // VIN auto-fill
       vinInput.addEventListener("change", function(){
-        const vin=this.value.trim();
+        const vin = this.value.trim();
         if(vin.length!==17) return;
         fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/decodevin/${vin}?format=json`)
           .then(res=>res.json())
           .then(data=>{
-            const results=data.Results;
-            const year=results.find(r=>r.Variable==="Model Year")?.Value||"";
-            const make=results.find(r=>r.Variable==="Make")?.Value||"";
-            const model=results.find(r=>r.Variable==="Model")?.Value||"";
-            if(year&&make&&model){
-              yearSelect.value=year; $(yearSelect).trigger('change.select2');
+            const results = data.Results;
+            const year = results.find(r=>r.Variable==="Model Year")?.Value || "";
+            const make = results.find(r=>r.Variable==="Make")?.Value || "";
+            const model = results.find(r=>r.Variable==="Model")?.Value || "";
+            if(year && make && model){
+              yearSelect.value = year; $(yearSelect).trigger('change.select2');
               setTimeout(()=>{
-                makeSelect.value=make; $(makeSelect).trigger('change.select2');
+                makeSelect.value = make; $(makeSelect).trigger('change.select2');
                 setTimeout(()=>{
-                  modelSelect.value=model; $(modelSelect).trigger('change.select2');
+                  modelSelect.value = model; $(modelSelect).trigger('change.select2');
                 },100);
               },100);
             }
           }).catch(err=>console.error("VIN lookup error:", err));
       });
-    }).catch(err=>console.error("Error loading vehicles_us.json:",err));
+
+      // Clear VIN button
+      clearVinBtn.addEventListener("click", function(){
+        vinInput.value = "";
+        yearSelect.value = ""; $(yearSelect).trigger('change.select2');
+        makeSelect.innerHTML = '<option value="">Select Make</option>'; $(makeSelect).select2('destroy').select2({ theme:'bootstrap-5', placeholder:'Select Make', width:'100%' });
+        modelSelect.innerHTML = '<option value="">Select Model</option>'; $(modelSelect).select2('destroy').select2({ theme:'bootstrap-5', placeholder:'Select Model', width:'100%' });
+      });
+
+    }).catch(err=>console.error("Error loading vehicles_us.json:", err));
 });
 </script>
 
