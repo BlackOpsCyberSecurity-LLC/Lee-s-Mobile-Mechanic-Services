@@ -5,7 +5,6 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
   <link rel="shortcut icon" href="https://r.mobirisesite.com/1997632/assets/images/shop3-h_mifa1ufz.jpg" type="image/x-icon">
-  <meta name="description" content="">
   <title>Book Appointment</title>
 
   <!-- CSS -->
@@ -27,23 +26,16 @@
     .submit-btn { background-color: #00aaff; color: white; font-size: 1.2rem; border-radius: 8px; padding: 12px 30px; border: none; }
     .submit-btn:hover { background-color: #0088cc; color: white; }
 
-    /* Select2 / Vehicle Dropdown Styling */
     select.form-select { border: 2px solid #000 !important; height: 52px !important; font-size: 1.1rem !important; font-weight: 500; cursor: pointer !important; }
     .select2-container .select2-selection--single { height: 52px !important; border: 2px solid #000 !important; font-size: 1.1rem !important; display: flex !important; align-items: center !important; }
     .select2-container--default .select2-selection--multiple { border: 2px solid #000 !important; min-height: 52px !important; font-size: 1.1rem !important; }
     .select2-selection__rendered { padding-left: 12px !important; }
-
-    /* Responsive row for vehicle dropdowns */
-    .vehicle-row .col-md-4 { padding-left:5px; padding-right:5px; }
-    @media (max-width: 767px) {
-      .vehicle-row .col-md-4 { margin-bottom: 1rem; }
-    }
   </style>
 </head>
 <body>
 <main>
 
-<!-- Navbar -->
+<!-- Navbar (unchanged) -->
 <section data-bs-version="5.1" class="menu menu5 cid-v3BV98Nlzj" once="menu" id="menu05-1i">
   <nav class="navbar navbar-dropdown navbar-fixed-top navbar-expand-lg">
     <div class="container">
@@ -76,47 +68,47 @@
 <section class="container mt-5 mb-5">
   <div class="form-section">
     <h4><i class="bi bi-person-fill"></i> Personal Information</h4>
-    <form>
+    <form id="appointmentForm">
       <div class="mb-3">
         <label for="name" class="form-label">Full Name</label>
-        <input type="text" class="form-control" id="name" placeholder="John Doe" required>
+        <input type="text" class="form-control" id="name" name="name" placeholder="John Doe" required>
       </div>
 
       <div class="mb-3">
         <label for="email" class="form-label">Email</label>
-        <input type="email" class="form-control" id="email" placeholder="you@example.com" required>
+        <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" required>
       </div>
 
       <div class="mb-3">
         <label for="phone" class="form-label">Phone</label>
-        <input type="tel" class="form-control" id="phone" placeholder="239-441-8552" required>
+        <input type="tel" class="form-control" id="phone" name="phone" placeholder="239-441-8552" required>
       </div>
 
       <h4><i class="bi bi-car-front-fill"></i> Vehicle Information</h4>
       <div class="row vehicle-row">
         <div class="col-12 mb-3">
           <label for="vin" class="form-label">VIN (Optional)</label>
-          <input type="text" id="vin" class="form-control" placeholder="Enter VIN to auto-fill vehicle info">
+          <input type="text" id="vin" name="vin" class="form-control" placeholder="Enter VIN to auto-fill vehicle info">
         </div>
         <div class="col-md-4 mb-3">
           <label for="year" class="form-label">Year</label>
-          <select id="year" class="form-select select2-single"><option value="">Select Year</option></select>
+          <select id="year" name="year" class="form-select select2-single"><option value="">Select Year</option></select>
         </div>
         <div class="col-md-4 mb-3">
           <label for="make" class="form-label">Make</label>
-          <select id="make" class="form-select select2-single"><option value="">Select Make</option></select>
+          <select id="make" name="make" class="form-select select2-single"><option value="">Select Make</option></select>
         </div>
         <div class="col-md-4 mb-3">
           <label for="model" class="form-label">Model</label>
-          <select id="model" class="form-select select2-single"><option value="">Select Model</option></select>
+          <select id="model" name="model" class="form-select select2-single"><option value="">Select Model</option></select>
         </div>
       </div>
 
       <!-- Services & Parts (unchanged) -->
       <h4><i class="bi bi-tools"></i> Services Requested</h4>
       <div class="mb-3">
-        <select id="services" class="form-select select2-multiple" multiple="multiple" style="width:100%">
-          <!-- Your existing service options here -->
+        <select id="services" name="services" class="form-select select2-multiple" multiple="multiple" style="width:100%">
+          <!-- Keep all your service options here -->
           <option>Full Vehicle Diagnostic Scan</option>
           <option>Check Engine Light Troubleshooting</option>
           <option>Electrical/Starting System Diagnostic</option>
@@ -167,8 +159,8 @@
 
       <h4><i class="bi bi-box-seam"></i> Parts Needed</h4>
       <div class="mb-3">
-        <select id="parts" class="form-select select2-multiple" multiple="multiple" style="width:100%">
-          <!-- Your existing parts options here -->
+        <select id="parts" name="parts" class="form-select select2-multiple" multiple="multiple" style="width:100%">
+          <!-- Keep all your parts options here -->
           <option>Brake Pads</option>
           <option>Rotors</option>
           <option>Brake Calipers</option>
@@ -195,7 +187,7 @@
 
       <div class="mb-3">
         <label for="notes" class="form-label">Additional Notes</label>
-        <textarea class="form-control" id="notes" rows="3" placeholder="Any other details..."></textarea>
+        <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="Any other details..."></textarea>
       </div>
 
       <div class="text-center">
@@ -204,41 +196,6 @@
     </form>
   </div>
 </section>
-
-<!-- Contact Section (unchanged) -->
-<section data-bs-version="5.1" class="contacts02 map1 cid-v3BW1ZDWa1" id="contacts02-1n">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-12 content-head">
-        <div class="mbr-section-head mb-5">
-          <h3 class="mbr-section-title mbr-fonts-style align-center mb-0 display-2"><strong>Contact Info</strong></h3>
-        </div>
-      </div>
-    </div>
-    <div class="row justify-content-center">
-      <div class="card col-12 col-md-12 col-lg-6">
-        <div class="card-wrapper">
-          <div class="text-wrapper">
-            <h5 class="cardTitle mbr-fonts-style mb-2 display-5"><strong>Contact Us @</strong></h5>
-            <ul class="list mbr-fonts-style display-7">
-              <li>Phone: <a href="tel:+12394418552" class="contact-link">239-441-8552</a></li>
-              <li>Email: <a href="mailto:leesmobilemechanicservices@gmail.com" class="contact-link">leesmobilemechanicservices@gmail.com</a></li>
-              <li>Address: Conway, South Carolina-29526</li>
-              <li>Working Hours: Full Time</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="map-wrapper col-md-12 col-lg-6">
-        <div class="google-map">
-          <iframe frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyB7QWkvlxV39ZsyKvhZRjPGVqlJFvxxNkw&q=Conway South Carolina" allowfullscreen></iframe>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-</main>
 
 <!-- Footer -->
 <footer class="footer py-3 bg-dark text-white mt-auto">
@@ -255,7 +212,6 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-
   const yearSelect = document.getElementById("year");
   const makeSelect = document.getElementById("make");
   const modelSelect = document.getElementById("model");
@@ -264,13 +220,10 @@ document.addEventListener("DOMContentLoaded", function () {
   fetch("vehicles_us.json")
     .then(res => res.json())
     .then(vehicleData => {
-      // Populate unique years
+      // Populate years
       const years = Array.from(new Set(vehicleData.map(v => v.Year))).sort((a,b)=>b-a);
-      years.forEach(year => {
-        let opt = document.createElement("option");
-        opt.value = year;
-        opt.textContent = year;
-        yearSelect.appendChild(opt);
+      years.forEach(year=>{
+        let opt=document.createElement("option"); opt.value=year; opt.textContent=year; yearSelect.appendChild(opt);
       });
 
       // Initialize Select2
@@ -281,63 +234,49 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Year → Make
       yearSelect.addEventListener("change", function(){
-        const year = this.value;
-        makeSelect.innerHTML = '<option value="">Select Make</option>';
-        modelSelect.innerHTML = '<option value="">Select Model</option>';
+        const year=this.value;
+        makeSelect.innerHTML='<option value="">Select Make</option>';
+        modelSelect.innerHTML='<option value="">Select Model</option>';
         if(!year) return;
-        const makes = Array.from(new Set(vehicleData.filter(v => v.Year===year).map(v=>v.Make))).sort();
-        makes.forEach(make=>{
-          let opt=document.createElement("option"); opt.value=make; opt.textContent=make; makeSelect.appendChild(opt);
-        });
+        const makes=Array.from(new Set(vehicleData.filter(v=>v.Year===year).map(v=>v.Make))).sort();
+        makes.forEach(make=>{ let opt=document.createElement("option"); opt.value=make; opt.textContent=make; makeSelect.appendChild(opt); });
         $(makeSelect).trigger('change.select2');
       });
 
       // Make → Model
       makeSelect.addEventListener("change", function(){
-        const year = yearSelect.value;
-        const make = this.value;
-        modelSelect.innerHTML = '<option value="">Select Model</option>';
-        if(!year || !make) return;
-        const models = Array.from(new Set(vehicleData.filter(v => v.Year===year && v.Make===make).map(v=>v.Model))).sort();
-        models.forEach(model=>{
-          let opt=document.createElement("option"); opt.value=model; opt.textContent=model; modelSelect.appendChild(opt);
-        });
+        const year=yearSelect.value;
+        const make=this.value;
+        modelSelect.innerHTML='<option value="">Select Model</option>';
+        if(!year||!make) return;
+        const models=Array.from(new Set(vehicleData.filter(v=>v.Year===year&&v.Make===make).map(v=>v.Model))).sort();
+        models.forEach(model=>{ let opt=document.createElement("option"); opt.value=model; opt.textContent=model; modelSelect.appendChild(opt); });
         $(modelSelect).trigger('change.select2');
       });
 
       // VIN auto-fill
-      vinInput.addEventListener("change", function() {
-        const vin = this.value.trim();
-        if(vin.length !== 17) return; // Standard VIN length
-
+      vinInput.addEventListener("change", function(){
+        const vin=this.value.trim();
+        if(vin.length!==17) return;
         fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/decodevin/${vin}?format=json`)
-          .then(res => res.json())
-          .then(data => {
-            const results = data.Results;
-            const year = results.find(r => r.Variable === "Model Year")?.Value || "";
-            const make = results.find(r => r.Variable === "Make")?.Value || "";
-            const model = results.find(r => r.Variable === "Model")?.Value || "";
-
-            if(year && make && model){
-              yearSelect.value = year;
-              $(yearSelect).trigger('change.select2');
-
+          .then(res=>res.json())
+          .then(data=>{
+            const results=data.Results;
+            const year=results.find(r=>r.Variable==="Model Year")?.Value||"";
+            const make=results.find(r=>r.Variable==="Make")?.Value||"";
+            const model=results.find(r=>r.Variable==="Model")?.Value||"";
+            if(year&&make&&model){
+              yearSelect.value=year; $(yearSelect).trigger('change.select2');
               setTimeout(()=>{
-                makeSelect.value = make;
-                $(makeSelect).trigger('change.select2');
-
+                makeSelect.value=make; $(makeSelect).trigger('change.select2');
                 setTimeout(()=>{
-                  modelSelect.value = model;
-                  $(modelSelect).trigger('change.select2');
-                }, 100);
-              }, 100);
+                  modelSelect.value=model; $(modelSelect).trigger('change.select2');
+                },100);
+              },100);
             }
-          })
-          .catch(err => console.error("VIN lookup error:", err));
+          }).catch(err=>console.error("VIN lookup error:", err));
       });
-
-    })
-    .catch(err => console.error("Error loading vehicle data:", err));
+    }).catch(err=>console.error("Error loading vehicles_us.json:",err));
 });
 </script>
 
