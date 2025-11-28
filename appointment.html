@@ -2,20 +2,22 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Book Appointment – Lee’s Mobile Mechanic</title>
 
-  <!-- Home Page CSS -->
+  <!-- CSS (matching homepage) -->
   <link rel="stylesheet" href="https://r.mobirisesite.com/1997632/assets/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://r.mobirisesite.com/1997632/assets/dropdown/css/style.css">
+  <link rel="stylesheet" href="https://r.mobirisesite.com/1997632/assets/animatecss/animate.css">
   <link rel="stylesheet" href="https://r.mobirisesite.com/1997632/assets/theme/css/style.css">
-  <link rel="stylesheet" href="https://r.mobirisesite.com/1997632/assets/css/mbr-additional.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
 
   <style>
-    /* Form section styling */
+    body { display:flex; flex-direction:column; min-height:100vh; background:#f1f1f1; }
+    main { flex:1; }
+    footer { flex-shrink:0; }
+
     .form-section {
       background:white;
       padding:2rem;
@@ -43,10 +45,10 @@
     select, input, textarea { border:2px solid black !important; }
   </style>
 </head>
+
 <body>
 
-<main>
-<!-- Navbar (matches Home page) -->
+<!-- Navbar (matches homepage) -->
 <section data-bs-version="5.1" class="menu menu5 cid-v3BV98Nlzj" once="menu" id="menu05-1i">
   <nav class="navbar navbar-dropdown navbar-fixed-top navbar-expand-lg">
     <div class="container">
@@ -75,8 +77,7 @@
   </nav>
 </section>
 
-<!-- Appointment Form -->
-<div class="container">
+<main class="container">
   <div class="form-section">
     <form action="https://usebasin.com/f/d459393c2dd6" method="POST">
 
@@ -89,26 +90,27 @@
       <label class="form-label">Phone Number</label>
       <input name="Phone" class="form-control mb-3" required>
 
-      <!-- VIN Lookup -->
-      <h4><i class="bi bi-search"></i> Vehicle Info (VIN Lookup)</h4>
-      <label class="form-label">VIN (optional)</label>
-      <input name="VIN" id="vin" class="form-control mb-3" placeholder="Enter VIN to auto-fill vehicle info">
-      <button type="button" id="vinLookup" class="submit-btn mb-3">Lookup VIN</button>
-
+      <!-- Vehicle Info + VIN -->
+      <h4><i class="bi bi-car-front-fill"></i> Vehicle Information</h4>
       <div class="row">
-        <div class="col-md-4 mb-3">
+        <div class="col-md-3 mb-3">
+          <label>VIN</label>
+          <input id="vin" class="form-control" placeholder="Enter VIN">
+          <button id="lookupVin" type="button" class="btn btn-primary mt-2 w-100">Lookup VIN</button>
+        </div>
+        <div class="col-md-3 mb-3">
           <label>Year</label>
           <select id="year" name="Year" class="form-select select2-single">
             <option value="">Select Year</option>
           </select>
         </div>
-        <div class="col-md-4 mb-3">
+        <div class="col-md-3 mb-3">
           <label>Make</label>
           <select id="make" name="Make" class="form-select select2-single">
             <option value="">Select Make</option>
           </select>
         </div>
-        <div class="col-md-4 mb-3">
+        <div class="col-md-3 mb-3">
           <label>Model</label>
           <select id="model" name="Model" class="form-select select2-single">
             <option value="">Select Model</option>
@@ -122,6 +124,8 @@
       <input id="engineType" name="Engine Type" class="form-control mb-3" placeholder="Example: V6, V8, 4 Cylinder">
       <label class="form-label">Engine Size (Liters)</label>
       <input id="engineLiters" name="Engine Liters" class="form-control mb-3" placeholder="Example: 3.5L">
+      <label class="form-label">Engine Info</label>
+      <input id="engineCombined" class="form-control mb-3" readonly placeholder="V6 / 3.5L">
 
       <!-- Services -->
       <h4><i class="bi bi-tools"></i> Services Requested</h4>
@@ -143,15 +147,16 @@
       <div class="text-center mt-4">
         <button class="submit-btn">Submit Appointment</button>
       </div>
-
     </form>
   </div>
-</div>
+</main>
 
-<!-- Footer (matches Home page) -->
-<footer class="footer py-3 bg-dark text-white mt-auto">
+<!-- Footer (matches homepage) -->
+<footer class="footer py-3 bg-dark text-white mt-5">
   <div class="container text-center">
-    <p class="mb-0">&copy; 2025 Lee'sMobileMechanicService-LLC. All rights reserved.</p>
+    <p class="mb-0">© 2025 Lee’s Mobile Mechanic Service — All Rights Reserved</p>
+    <p class="mb-0">📞 239-441-8552 | 📧 leesmobilemechanicservice@gmail.com</p>
+    <p class="mb-0">Serving Cape Coral • Ft Myers • Lehigh Acres • Punta Gorda</p>
   </div>
 </footer>
 
@@ -165,11 +170,10 @@
 
 <script>
 $(document).ready(function () {
-    // Init Select2
     $('.select2-single').select2({ width: "100%" });
     $('.select2-multiple').select2({ width: "100%" });
 
-    // Load vehicles from JSON
+    // Load vehicle JSON
     fetch("vehicles_us.json")
       .then(r => r.json())
       .then(data => {
@@ -192,25 +196,28 @@ $(document).ready(function () {
       });
 
     // VIN Lookup
-    $("#vinLookup").click(function(){
+    $("#lookupVin").click(function(){
         const vin = $("#vin").val().trim();
-        if (!vin) return alert("Please enter a VIN.");
+        if(!vin){ alert("Please enter a VIN"); return; }
 
-        fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/decodevin/${vin}?format=json`)
-          .then(r => r.json())
-          .then(res => {
-              let results = res.Results;
-              // Auto-fill year
-              const year = results.find(r => r.Variable === "Model Year")?.Value || "";
-              const make = results.find(r => r.Variable === "Make")?.Value || "";
-              const model = results.find(r => r.Variable === "Model")?.Value || "";
-              const engineType = results.find(r => r.Variable === "Engine Configuration")?.Value || "";
-              const engineLiters = results.find(r => r.Variable === "Engine Displacement (L)")?.Value || "";
+        fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValuesExtended/${vin}?format=json`)
+          .then(res => res.json())
+          .then(resp => {
+              if(!resp.Results || resp.Results.length===0) return;
+              const result = resp.Results[0];
 
-              if(year) { $("#year").val(year).trigger('change'); setTimeout(()=>{ $("#make").val(make).trigger('change'); setTimeout(()=>{ $("#model").val(model).trigger('change'); },200); },200); }
-              if(engineType) $("#engineType").val(engineType);
-              if(engineLiters) $("#engineLiters").val(engineLiters);
-          });
+              if(result.ModelYear) $("#year").val(result.ModelYear).trigger('change');
+              if(result.Make) setTimeout(()=>$("#make").val(result.Make).trigger('change'),100);
+              if(result.Model) setTimeout(()=>$("#model").val(result.Model),200);
+
+              const engineType = result.EngineConfiguration || "";
+              const engineLiters = result.DisplacementL || "";
+
+              $("#engineType").val(engineType);
+              $("#engineLiters").val(engineLiters);
+              $("#engineCombined").val([engineType,engineLiters].filter(Boolean).join(" / "));
+          })
+          .catch(err => console.error(err));
     });
 });
 </script>
