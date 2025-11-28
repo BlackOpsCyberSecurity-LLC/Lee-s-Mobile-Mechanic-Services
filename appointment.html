@@ -2,22 +2,14 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
-  <link rel="shortcut icon" href="https://r.mobirisesite.com/1997632/assets/images/shop3-h_mifa1ufz.jpg" type="image/x-icon">
-  <meta name="description" content="">
   <title>Book Appointment</title>
+  <link rel="shortcut icon" href="https://r.mobirisesite.com/1997632/assets/images/shop3-h_mifa1ufz.jpg" type="image/x-icon">
 
   <!-- CSS -->
   <link rel="stylesheet" href="https://r.mobirisesite.com/1997632/assets/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://r.mobirisesite.com/1997632/assets/dropdown/css/style.css">
-  <link rel="stylesheet" href="https://r.mobirisesite.com/1997632/assets/animatecss/animate.css">
   <link rel="stylesheet" href="https://r.mobirisesite.com/1997632/assets/theme/css/style.css">
-  <link rel="preload" href="https://fonts.googleapis.com/css?family=Inter+Tight:100,200,300,400,500,600,700,800,900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter+Tight:100,200,300,400,500,600,700,800,900&display=swap">
-  </noscript>
-  <link rel="stylesheet" href="https://r.mobirisesite.com/1997632/assets/css/mbr-additional.css" type="text/css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
   <style>
@@ -25,31 +17,29 @@
     main { flex: 1; }
     footer { flex-shrink: 0; }
 
-    .form-label { font-weight: 600; }
     .form-control, .form-select { border-radius: 6px; }
     .btn-submit { padding: 12px 25px; font-size: 1.1rem; background-color: #00aaff; color: #fff; border-radius: 8px; border: none; transition: 0.3s; }
     .btn-submit:hover { background-color: #0088cc; }
 
     .contact-link { color: #007BFF; text-decoration: underline; transition: color 0.3s; }
     .contact-link:hover { color: #ffd700; text-decoration: none; }
+
+    .optional-fields { display: none; margin-top: 15px; }
+    .toggle-btn { cursor: pointer; color: #00aaff; text-decoration: underline; }
   </style>
 </head>
 <body>
 <main>
 
 <!-- Navbar -->
-<section data-bs-version="5.1" class="menu menu5 cid-v3BV98Nlzj" once="menu" id="menu05-appointment">
+<section data-bs-version="5.1" class="menu menu5" id="menu05-appointment">
   <nav class="navbar navbar-dropdown navbar-fixed-top navbar-expand-lg">
     <div class="container">
       <div class="navbar-brand">
-        <span class="navbar-logo">
-          <img src="https://r.mobirisesite.com/1997632/assets/images/shop3-h_mifa1ufz.jpg" alt="" style="height: 5rem;">
-        </span>
-        <span class="navbar-caption-wrap">
-          <a class="navbar-caption text-black text-primary display-4">Lee's Mobile Mechanic Service</a>
-        </span>
+        <img src="https://r.mobirisesite.com/1997632/assets/images/shop3-h_mifa1ufz.jpg" alt="" style="height: 5rem;">
+        <a class="navbar-caption text-black text-primary display-4">Lee's Mobile Mechanic Service</a>
       </div>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbarSupportedContent" data-bs-target="#navbarSupportedContent" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
         <div class="hamburger"><span></span><span></span><span></span><span></span></div>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -65,25 +55,21 @@
   </nav>
 </section>
 
-<!-- Appointment Form Section -->
+<!-- Appointment Form -->
 <section class="features030 cid-v3Capy1s1k" id="appointment-form">
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-12 col-lg-8">
-        <div class="content-head mb-5 text-center">
-          <h1 class="mbr-section-title mbr-fonts-style mb-0 display-2">Book Your Appointment</h1>
-          <p class="text-muted mt-2">Fill out the form below and we will contact you to confirm your appointment.</p>
+      <div class="col-12 col-lg-6">
+        <div class="text-center mb-4">
+          <h1 class="display-3">Book Your Appointment</h1>
+          <p class="text-muted">Just a few details and we’ll get back to you!</p>
         </div>
 
         <form action="https://usebasin.com/f/d459393c2dd6" method="POST">
+          <!-- Essential Info -->
           <div class="mb-3">
             <label class="form-label" for="name">Full Name</label>
             <input type="text" class="form-control" id="name" name="name" required>
-          </div>
-
-          <div class="mb-3">
-            <label class="form-label" for="email">Email Address</label>
-            <input type="email" class="form-control" id="email" name="email" required>
           </div>
 
           <div class="mb-3">
@@ -91,6 +77,12 @@
             <input type="tel" class="form-control" id="phone" name="phone" required>
           </div>
 
+          <div class="mb-3">
+            <label class="form-label" for="email">Email Address</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+          </div>
+
+          <!-- Vehicle Info -->
           <div class="mb-3">
             <label class="form-label" for="make">Vehicle Make</label>
             <input type="text" class="form-control" id="make" name="make" placeholder="e.g., Toyota" required>
@@ -106,58 +98,60 @@
             <input type="number" class="form-control" id="year" name="year" placeholder="e.g., 2018" min="1900" max="2030" required>
           </div>
 
-          <div class="mb-3">
-            <label class="form-label" for="service">Service Needed</label>
-            <select class="form-select" id="service" name="service" required>
-              <option value="">Select a service...</option>
-              <option value="Diagnostics & Electronics">Diagnostics & Electronics</option>
-              <option value="Engine Services">Engine Services</option>
-              <option value="Transmission & Drivetrain">Transmission & Drivetrain</option>
-              <option value="Brakes & Suspension">Brakes & Suspension</option>
-              <option value="Cooling & HVAC">Cooling & HVAC</option>
-              <option value="Tires & Wheels">Tires & Wheels</option>
-              <option value="Exhaust & Emissions">Exhaust & Emissions</option>
-              <option value="Roadside & Emergency">Roadside & Emergency</option>
-              <option value="Maintenance & Fluids">Maintenance & Fluids</option>
-            </select>
+          <!-- Optional Details Toggle -->
+          <p class="toggle-btn" onclick="document.querySelector('.optional-fields').classList.toggle('d-block')">Add More Details (optional)</p>
+
+          <div class="optional-fields">
+            <div class="mb-3">
+              <label class="form-label" for="service">Service Needed</label>
+              <select class="form-select" id="service" name="service">
+                <option value="">Select a service...</option>
+                <option value="Diagnostics & Electronics">Diagnostics & Electronics</option>
+                <option value="Engine Services">Engine Services</option>
+                <option value="Transmission & Drivetrain">Transmission & Drivetrain</option>
+                <option value="Brakes & Suspension">Brakes & Suspension</option>
+                <option value="Cooling & HVAC">Cooling & HVAC</option>
+                <option value="Tires & Wheels">Tires & Wheels</option>
+                <option value="Exhaust & Emissions">Exhaust & Emissions</option>
+                <option value="Roadside & Emergency">Roadside & Emergency</option>
+                <option value="Maintenance & Fluids">Maintenance & Fluids</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="parts">Parts Needed / Notes</label>
+              <textarea class="form-control" id="parts" name="parts" rows="2" placeholder="Optional: parts or special requests"></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="message">Additional Notes</label>
+              <textarea class="form-control" id="message" name="message" rows="3" placeholder="Anything else we should know?"></textarea>
+            </div>
           </div>
 
-          <div class="mb-3">
-            <label class="form-label" for="parts">Parts Needed / Notes</label>
-            <textarea class="form-control" id="parts" name="parts" rows="2" placeholder="Optional: list parts or specific requests"></textarea>
-          </div>
-
-          <div class="mb-3">
-            <label class="form-label" for="message">Additional Notes</label>
-            <textarea class="form-control" id="message" name="message" rows="4" placeholder="Other information we should know"></textarea>
-          </div>
-
-          <div class="text-center">
+          <div class="text-center mt-3">
             <button type="submit" class="btn-submit">Submit Appointment</button>
           </div>
         </form>
-
       </div>
     </div>
   </div>
 </section>
 
 <!-- Contact Section -->
-<section data-bs-version="5.1" class="contacts02 map1 cid-v3BW1ZDWa1" id="contacts02-appointment">
+<section data-bs-version="5.1" class="contacts02 map1" id="contacts02-appointment">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-12 content-head">
-        <div class="mbr-section-head mb-5">
-          <h3 class="mbr-section-title mbr-fonts-style align-center mb-0 display-2"><strong>Contact Info</strong></h3>
-        </div>
+        <h3 class="text-center display-2 mb-3"><strong>Contact Info</strong></h3>
       </div>
     </div>
     <div class="row justify-content-center">
       <div class="card col-12 col-md-12 col-lg-6">
         <div class="card-wrapper">
           <div class="text-wrapper">
-            <h5 class="cardTitle mbr-fonts-style mb-2 display-5"><strong>Contact Us @</strong></h5>
-            <ul class="list mbr-fonts-style display-7">
+            <h5 class="mb-2 display-5"><strong>Contact Us @</strong></h5>
+            <ul class="list display-7">
               <li>Phone: <a href="tel:+12394418552" class="contact-link">239-441-8552</a></li>
               <li>Email: <a href="mailto:leesmobilemechanicservices@gmail.com" class="contact-link">leesmobilemechanicservices@gmail.com</a></li>
               <li>Address: Conway, South Carolina-29526</li>
@@ -167,9 +161,7 @@
         </div>
       </div>
       <div class="map-wrapper col-md-12 col-lg-6">
-        <div class="google-map">
-          <iframe frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyB7QWkvlxV39ZsyKvhZRjPGVqlJFvxxNkw&q=Conway South Carolina" allowfullscreen></iframe>
-        </div>
+        <iframe frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyB7QWkvlxV39ZsyKvhZRjPGVqlJFvxxNkw&q=Conway South Carolina" allowfullscreen></iframe>
       </div>
     </div>
   </div>
@@ -184,13 +176,8 @@
   </div>
 </footer>
 
-<!-- JS -->
 <script src="https://r.mobirisesite.com/1997632/assets/web/assets/jquery/jquery.min.js"></script>
 <script src="https://r.mobirisesite.com/1997632/assets/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="https://r.mobirisesite.com/1997632/assets/smoothscroll/smooth-scroll.js"></script>
-<script src="https://r.mobirisesite.com/1997632/assets/ytplayer/index.js"></script>
-<script src="https://r.mobirisesite.com/1997632/assets/dropdown/js/navbar-dropdown.js"></script>
-<script src="https://r.mobirisesite.com/1997632/assets/theme/js/script.js"></script>
 
 </body>
 </html>
