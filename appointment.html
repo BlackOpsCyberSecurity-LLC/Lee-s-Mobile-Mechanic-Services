@@ -5,6 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
   <link rel="shortcut icon" href="https://r.mobirisesite.com/1997632/assets/images/shop3-h_mifa1ufz.jpg" type="image/x-icon">
+  <meta name="description" content="">
   <title>Book Appointment</title>
 
   <!-- CSS -->
@@ -24,62 +25,44 @@
     main { flex: 1; }
     footer { flex-shrink: 0; }
 
-    /* Form card */
+    /* Form Styling */
     .form-card {
-      background: #ffffff;
-      border-radius: 10px;
-      padding: 30px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      max-width: 700px;
+      max-width: 800px;
       margin: 50px auto;
+      padding: 40px;
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
     }
-
     .form-card h2 {
-      margin-bottom: 20px;
-      font-weight: 600;
-      color: #000;
+      text-align: center;
+      margin-bottom: 30px;
+      font-weight: 700;
     }
-
     .form-label {
       font-weight: 500;
     }
-
     .form-control:focus {
       border-color: #00aaff;
-      box-shadow: 0 0 5px rgba(0,170,255,0.3);
+      box-shadow: 0 0 0 0.2rem rgba(0,170,255,0.25);
     }
-
     .btn-primary {
       background-color: #00aaff;
       border-color: #00aaff;
-      padding: 12px 25px;
       font-size: 1.1rem;
-      border-radius: 6px;
+      padding: 12px;
       transition: background 0.3s;
     }
-
     .btn-primary:hover {
       background-color: #0088cc;
       border-color: #0088cc;
-    }
-
-    .section-title {
-      text-align: center;
-      margin-bottom: 40px;
-      font-weight: 600;
-      font-size: 2rem;
-    }
-
-    /* Navbar button spacing */
-    .navbar-buttons .btn {
-      margin-left: 10px;
     }
   </style>
 </head>
 <body>
 <main>
 
-<!-- Navbar (same as Home/Page1) -->
+<!-- Navbar -->
 <section data-bs-version="5.1" class="menu menu5 cid-v3BV98Nlzj" once="menu" id="menu05-1i">
   <nav class="navbar navbar-dropdown navbar-fixed-top navbar-expand-lg">
     <div class="container">
@@ -108,10 +91,10 @@
   </nav>
 </section>
 
-<!-- Appointment Form -->
+<!-- Appointment Form Section -->
 <section>
   <div class="form-card">
-    <h2 class="section-title">Book Your Appointment</h2>
+    <h2>Book Your Appointment</h2>
     <form>
 
       <!-- Customer Info -->
@@ -120,32 +103,34 @@
         <input type="text" class="form-control" id="fullName" placeholder="Enter your full name" required>
       </div>
 
-      <div class="mb-3">
-        <label class="form-label" for="email">Email Address</label>
-        <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label" for="phone">Phone Number</label>
-        <input type="tel" class="form-control" id="phone" placeholder="Enter your phone number" required>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label" for="email">Email Address</label>
+          <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label" for="phone">Phone Number</label>
+          <input type="tel" class="form-control" id="phone" placeholder="Enter your phone number" required>
+        </div>
       </div>
 
       <!-- Vehicle Info -->
-      <div class="mb-3">
-        <label class="form-label" for="vehicleMake">Vehicle Make</label>
-        <input type="text" class="form-control" id="vehicleMake" placeholder="e.g., Toyota" required>
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label class="form-label" for="vehicleMake">Vehicle Make</label>
+          <input type="text" class="form-control" id="vehicleMake" placeholder="Toyota" required>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label" for="vehicleModel">Vehicle Model</label>
+          <input type="text" class="form-control" id="vehicleModel" placeholder="Camry" required>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label" for="vehicleYear">Year</label>
+          <input type="number" class="form-control" id="vehicleYear" placeholder="2018" required>
+        </div>
       </div>
 
-      <div class="mb-3">
-        <label class="form-label" for="vehicleModel">Vehicle Model</label>
-        <input type="text" class="form-control" id="vehicleModel" placeholder="e.g., Camry" required>
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label" for="vehicleYear">Year</label>
-        <input type="number" class="form-control" id="vehicleYear" placeholder="e.g., 2018" required>
-      </div>
-
+      <!-- Service Details -->
       <div class="mb-3">
         <label class="form-label" for="serviceType">Service Needed</label>
         <select class="form-control" id="serviceType" required>
@@ -160,19 +145,33 @@
       </div>
 
       <div class="mb-3">
+        <label class="form-label" for="partsNeeded">Parts Needed (Optional)</label>
+        <input type="text" class="form-control" id="partsNeeded" placeholder="List parts if any">
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label" for="preferredDate">Preferred Date</label>
+          <input type="date" class="form-control" id="preferredDate" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label" for="preferredTime">Preferred Time</label>
+          <input type="time" class="form-control" id="preferredTime" required>
+        </div>
+      </div>
+
+      <!-- Additional Notes -->
+      <div class="mb-3">
         <label class="form-label" for="additionalNotes">Additional Notes</label>
-        <textarea class="form-control" id="additionalNotes" rows="4" placeholder="Any additional information..."></textarea>
+        <textarea class="form-control" id="additionalNotes" rows="4" placeholder="Any extra details"></textarea>
       </div>
 
       <button type="submit" class="btn btn-primary w-100">Submit Appointment</button>
-
     </form>
   </div>
 </section>
 
-</main>
-
-<!-- Footer (same as Home/Page1) -->
+<!-- Footer -->
 <footer class="footer py-3 bg-dark text-white mt-auto">
   <div class="container text-center">
     <p class="mb-0">&copy; 2025 Lee's Mobile Mechanic Service. All rights reserved.</p>
