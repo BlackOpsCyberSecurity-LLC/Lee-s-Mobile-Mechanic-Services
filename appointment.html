@@ -97,6 +97,13 @@
         <input type="tel" class="form-control" id="phone" name="phone" placeholder="239-441-8552" required>
       </div>
 
+      <!-- VIN Field -->
+      <h4><i class="bi bi-key-fill"></i> Vehicle VIN</h4>
+      <div class="mb-3">
+        <label for="vin" class="form-label">VIN (Vehicle Identification Number)</label>
+        <input type="text" class="form-control" id="vin" name="vin" placeholder="Enter VIN here">
+      </div>
+
       <h4><i class="bi bi-car-front-fill"></i> Vehicle Information</h4>
       <div class="row">
         <div class="col-md-4 mb-3">
@@ -122,24 +129,24 @@
       <h4><i class="bi bi-tools"></i> Services Requested</h4>
       <div class="mb-3">
         <select id="services" name="services[]" class="form-select select2-multiple" multiple="multiple" style="width:100%">
-          <option>Full Vehicle Diagnostic Scan</option>
-          <option>Check Engine Light Troubleshooting</option>
-          <option>Oil Change (Mobile)</option>
-          <option>Tune-Up / Spark Plugs</option>
-          <option>Brake Pads (Front or Rear)</option>
-          <option>Battery Replacement</option>
-          <option>Other</option>
+          <option data-vehicle="all">Full Vehicle Diagnostic Scan</option>
+          <option data-vehicle="all">Check Engine Light Troubleshooting</option>
+          <option data-vehicle="all">Oil Change (Mobile)</option>
+          <option data-vehicle="all">Tune-Up / Spark Plugs</option>
+          <option data-vehicle="all">Brake Pads (Front or Rear)</option>
+          <option data-vehicle="all">Battery Replacement</option>
+          <option data-vehicle="all">Other</option>
         </select>
       </div>
 
       <h4><i class="bi bi-box-seam"></i> Parts Needed</h4>
       <div class="mb-3">
         <select id="parts" name="parts[]" class="form-select select2-multiple" multiple="multiple" style="width:100%">
-          <option>Brake Pads</option>
-          <option>Rotors</option>
-          <option>Battery</option>
-          <option>Oil Filter</option>
-          <option>Other</option>
+          <option data-vehicle="all">Brake Pads</option>
+          <option data-vehicle="all">Rotors</option>
+          <option data-vehicle="all">Battery</option>
+          <option data-vehicle="all">Oil Filter</option>
+          <option data-vehicle="all">Other</option>
         </select>
       </div>
 
@@ -154,7 +161,7 @@
     </form>
   </div>
 
-  <!-- Contact Section (same style as home page) -->
+  <!-- Contact Section -->
   <section data-bs-version="5.1" class="contacts02 map1 cid-v3BW1ZDWa1" id="contacts02-1n">
     <div class="container">
       <div class="row justify-content-center">
@@ -189,7 +196,7 @@
 
 </main>
 
-<!-- Footer (same as home page) -->
+<!-- Footer -->
 <footer class="footer py-3 bg-dark text-white mt-auto">
   <div class="container text-center">
     <p class="mb-0">&copy; 2025 Lee'sMobileMechanicService-LLC. All rights reserved.</p>
@@ -199,36 +206,72 @@
 <!-- JS -->
 <script src="https://r.mobirisesite.com/1997632/assets/web/assets/jquery/jquery.min.js"></script>
 <script src="https://r.mobirisesite.com/1997632/assets/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="https://r.mobirisesite.com/1997632/assets/smoothscroll/smooth-scroll.js"></script>
-<script src="https://r.mobirisesite.com/1997632/assets/dropdown/js/navbar-dropdown.js"></script>
-<script src="https://r.mobirisesite.com/1997632/assets/theme/js/script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="https://js.usebasin.com/v2.10.0.min.js" defer></script>
 
 <script>
-  $(document).ready(function() {
-    $('.select2-single').select2({ theme: 'bootstrap-5', placeholder: 'Select an option', width: '100%' });
-    $('.select2-multiple').select2({ theme: 'bootstrap-5', placeholder: 'Select one or more', width: '100%' });
+$(document).ready(function() {
+  $('.select2-single').select2({ theme: 'bootstrap-5', placeholder: 'Select an option', width: '100%' });
+  $('.select2-multiple').select2({ theme: 'bootstrap-5', placeholder: 'Select one or more', width: '100%' });
 
-    // Populate vehicle dropdowns
-    const vehicleData = {}; // <-- paste your vehicles_us.json content here
-    const years = Object.keys(vehicleData).sort((a,b)=>b-a);
-    years.forEach(y => $('#year').append(`<option value="${y}">${y}</option>`));
+  const vehicleData = {}; // <-- paste your vehicles_us.json if needed
 
-    $('#year').on('change', function() {
-      const year = this.value;
-      $('#make').empty().append('<option value="">Select Make</option>');
-      $('#model').empty().append('<option value="">Select Model</option>');
-      if(vehicleData[year]) Object.keys(vehicleData[year]).sort().forEach(make=>$('#make').append(`<option value="${make}">${make}</option>`));
-    });
+  // Populate Year dropdown
+  const years = Object.keys(vehicleData).sort((a,b)=>b-a);
+  years.forEach(y => $('#year').append(`<option value="${y}">${y}</option>`));
 
-    $('#make').on('change', function() {
-      const year = $('#year').val();
-      const make = this.value;
-      $('#model').empty().append('<option value="">Select Model</option>');
-      if(vehicleData[year] && vehicleData[year][make]) vehicleData[year][make].forEach(model=>$('#model').append(`<option value="${model}">${model}</option>`));
-    });
+  $('#year').on('change', function() {
+    const year = this.value;
+    $('#make').empty().append('<option value="">Select Make</option>');
+    $('#model').empty().append('<option value="">Select Model</option>');
+    if(vehicleData[year]) Object.keys(vehicleData[year]).sort().forEach(make=>$('#make').append(`<option value="${make}">${make}</option>`));
   });
+
+  $('#make').on('change', function() {
+    const year = $('#year').val();
+    const make = this.value;
+    $('#model').empty().append('<option value="">Select Model</option>');
+    if(vehicleData[year] && vehicleData[year][make]) vehicleData[year][make].forEach(model=>$('#model').append(`<option value="${model}">${model}</option>`));
+  });
+
+  // VIN decode & filter options
+  async function getVehicleTypeFromVIN(vin) {
+    if(!vin) return null;
+    try {
+      const res = await fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValuesExtended/${vin}?format=json`);
+      const data = await res.json();
+      if(data.Results && data.Results[0]) {
+        return {
+          vehicleType: (data.Results[0].VehicleType || '').toLowerCase(),
+          engine: data.Results[0].EngineCylinders || '',
+          displacement: data.Results[0].DisplacementL || ''
+        };
+      }
+    } catch(e){ console.error(e); }
+    return null;
+  }
+
+  async function filterOptionsByVIN() {
+    const vin = $('#vin').val();
+    const vehicle = await getVehicleTypeFromVIN(vin);
+    if(!vehicle) return;
+
+    // Example: show/hide services based on vehicle type
+    $('#services option').each(function() {
+      const applicable = $(this).data('vehicle');
+      if(applicable === 'all' || applicable.split(',').includes(vehicle.vehicleType)) $(this).show();
+      else $(this).hide().prop('selected', false);
+    });
+    $('#parts option').each(function() {
+      const applicable = $(this).data('vehicle');
+      if(applicable === 'all' || applicable.split(',').includes(vehicle.vehicleType)) $(this).show();
+      else $(this).hide().prop('selected', false);
+    });
+    $('#services, #parts').select2({ theme: 'bootstrap-5', width: '100%' });
+  }
+
+  $('#vin').on('blur', filterOptionsByVIN);
+});
 </script>
 
 </body>
