@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
-  <title>Book Appointment</title>
   <link rel="shortcut icon" href="https://r.mobirisesite.com/1997632/assets/images/shop3-h_mifa1ufz.jpg" type="image/x-icon">
+  <title>Book Appointment</title>
 
   <!-- CSS -->
   <link rel="stylesheet" href="https://r.mobirisesite.com/1997632/assets/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://r.mobirisesite.com/1997632/assets/dropdown/css/style.css">
   <link rel="stylesheet" href="https://r.mobirisesite.com/1997632/assets/theme/css/style.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://r.mobirisesite.com/1997632/assets/css/mbr-additional.css" type="text/css">
 
   <style>
     body { display: flex; flex-direction: column; min-height: 100vh; }
@@ -20,26 +21,28 @@
     .form-control, .form-select { border-radius: 6px; }
     .btn-submit { padding: 12px 25px; font-size: 1.1rem; background-color: #00aaff; color: #fff; border-radius: 8px; border: none; transition: 0.3s; }
     .btn-submit:hover { background-color: #0088cc; }
-
-    .contact-link { color: #007BFF; text-decoration: underline; transition: color 0.3s; }
-    .contact-link:hover { color: #ffd700; text-decoration: none; }
-
     .optional-fields { display: none; margin-top: 15px; }
     .toggle-btn { cursor: pointer; color: #00aaff; text-decoration: underline; }
+    .contact-link { color: #007BFF; text-decoration: underline; transition: color 0.3s; }
+    .contact-link:hover { color: #ffd700; text-decoration: none; }
   </style>
 </head>
 <body>
 <main>
 
-<!-- Navbar -->
-<section data-bs-version="5.1" class="menu menu5" id="menu05-appointment">
+<!-- Navbar (matches Home/Page1) -->
+<section data-bs-version="5.1" class="menu menu5 cid-v3BV98Nlzj" once="menu" id="menu05-appointment">
   <nav class="navbar navbar-dropdown navbar-fixed-top navbar-expand-lg">
     <div class="container">
       <div class="navbar-brand">
-        <img src="https://r.mobirisesite.com/1997632/assets/images/shop3-h_mifa1ufz.jpg" alt="" style="height: 5rem;">
-        <a class="navbar-caption text-black text-primary display-4">Lee's Mobile Mechanic Service</a>
+        <span class="navbar-logo">
+          <img src="https://r.mobirisesite.com/1997632/assets/images/shop3-h_mifa1ufz.jpg" alt="" style="height: 5rem;">
+        </span>
+        <span class="navbar-caption-wrap">
+          <a class="navbar-caption text-black text-primary display-4">Lee's Mobile Mechanic Service</a>
+        </span>
       </div>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <div class="hamburger"><span></span><span></span><span></span><span></span></div>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -49,6 +52,7 @@
         <div class="navbar-buttons mbr-section-btn">
           <a class="btn btn-black display-4" href="page1.html">Job Pricing</a>
           <a class="btn btn-black display-4" href="index.html#contacts02-1n">Contact Info</a>
+          <a class="btn btn-primary display-4" href="appointment.html">Book Appointment</a>
         </div>
       </div>
     </div>
@@ -71,12 +75,10 @@
             <label class="form-label" for="name">Full Name</label>
             <input type="text" class="form-control" id="name" name="name" required>
           </div>
-
           <div class="mb-3">
             <label class="form-label" for="phone">Phone Number</label>
             <input type="tel" class="form-control" id="phone" name="phone" required>
           </div>
-
           <div class="mb-3">
             <label class="form-label" for="email">Email Address</label>
             <input type="email" class="form-control" id="email" name="email" required>
@@ -87,12 +89,10 @@
             <label class="form-label" for="make">Vehicle Make</label>
             <input type="text" class="form-control" id="make" name="make" placeholder="e.g., Toyota" required>
           </div>
-
           <div class="mb-3">
             <label class="form-label" for="model">Vehicle Model</label>
             <input type="text" class="form-control" id="model" name="model" placeholder="e.g., Camry" required>
           </div>
-
           <div class="mb-3">
             <label class="form-label" for="year">Vehicle Year</label>
             <input type="number" class="form-control" id="year" name="year" placeholder="e.g., 2018" min="1900" max="2030" required>
@@ -100,7 +100,6 @@
 
           <!-- Optional Details Toggle -->
           <p class="toggle-btn" onclick="document.querySelector('.optional-fields').classList.toggle('d-block')">Add More Details (optional)</p>
-
           <div class="optional-fields">
             <div class="mb-3">
               <label class="form-label" for="service">Service Needed</label>
@@ -178,6 +177,10 @@
 
 <script src="https://r.mobirisesite.com/1997632/assets/web/assets/jquery/jquery.min.js"></script>
 <script src="https://r.mobirisesite.com/1997632/assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="https://r.mobirisesite.com/1997632/assets/smoothscroll/smooth-scroll.js"></script>
+<script src="https://r.mobirisesite.com/1997632/assets/ytplayer/index.js"></script>
+<script src="https://r.mobirisesite.com/1997632/assets/dropdown/js/navbar-dropdown.js"></script>
+<script src="https://r.mobirisesite.com/1997632/assets/theme/js/script.js"></script>
 
 </body>
 </html>
