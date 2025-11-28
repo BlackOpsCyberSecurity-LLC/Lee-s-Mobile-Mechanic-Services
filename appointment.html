@@ -25,31 +25,20 @@
     main { flex: 1; }
     footer { flex-shrink: 0; }
 
-    .form-label { font-weight: 500; }
+    .form-label { font-weight: 600; }
+    .form-control, .form-select { border-radius: 6px; }
+    .btn-submit { padding: 12px 25px; font-size: 1.1rem; background-color: #00aaff; color: #fff; border-radius: 8px; border: none; transition: 0.3s; }
+    .btn-submit:hover { background-color: #0088cc; }
+
     .contact-link { color: #007BFF; text-decoration: underline; transition: color 0.3s; }
     .contact-link:hover { color: #ffd700; text-decoration: none; }
-
-    /* Button style matches Job Pricing buttons */
-    .btn-submit {
-      background-color: #000;
-      color: #fff;
-      border: none;
-      padding: 12px 25px;
-      border-radius: 5px;
-      font-size: 1rem;
-      transition: background 0.3s, color 0.3s;
-    }
-    .btn-submit:hover {
-      background-color: #00aaff;
-      color: #fff;
-    }
   </style>
 </head>
 <body>
 <main>
 
 <!-- Navbar -->
-<section data-bs-version="5.1" class="menu menu5 cid-v3BV98Nlzj" once="menu" id="menu05-1i">
+<section data-bs-version="5.1" class="menu menu5 cid-v3BV98Nlzj" once="menu" id="menu05-appointment">
   <nav class="navbar navbar-dropdown navbar-fixed-top navbar-expand-lg">
     <div class="container">
       <div class="navbar-brand">
@@ -77,30 +66,46 @@
 </section>
 
 <!-- Appointment Form Section -->
-<section class="appointment-form cid-v3XYZ123" id="appointment-1z">
-  <div class="container py-5">
-    <div class="row justify-content-center mb-4">
-      <div class="col-12 col-lg-8 text-center">
-        <h1 class="mbr-section-title display-2"><strong>Book Your Appointment</strong></h1>
-        <p class="text-muted">Fill out the form below and we’ll contact you to confirm your service time.</p>
-      </div>
-    </div>
-
+<section class="features030 cid-v3Capy1s1k" id="appointment-form">
+  <div class="container">
     <div class="row justify-content-center">
       <div class="col-12 col-lg-8">
+        <div class="content-head mb-5 text-center">
+          <h1 class="mbr-section-title mbr-fonts-style mb-0 display-2">Book Your Appointment</h1>
+          <p class="text-muted mt-2">Fill out the form below and we will contact you to confirm your appointment.</p>
+        </div>
+
         <form action="https://usebasin.com/f/d459393c2dd6" method="POST">
           <div class="mb-3">
             <label class="form-label" for="name">Full Name</label>
             <input type="text" class="form-control" id="name" name="name" required>
           </div>
+
           <div class="mb-3">
             <label class="form-label" for="email">Email Address</label>
             <input type="email" class="form-control" id="email" name="email" required>
           </div>
+
           <div class="mb-3">
             <label class="form-label" for="phone">Phone Number</label>
             <input type="tel" class="form-control" id="phone" name="phone" required>
           </div>
+
+          <div class="mb-3">
+            <label class="form-label" for="make">Vehicle Make</label>
+            <input type="text" class="form-control" id="make" name="make" placeholder="e.g., Toyota" required>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" for="model">Vehicle Model</label>
+            <input type="text" class="form-control" id="model" name="model" placeholder="e.g., Camry" required>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" for="year">Vehicle Year</label>
+            <input type="number" class="form-control" id="year" name="year" placeholder="e.g., 2018" min="1900" max="2030" required>
+          </div>
+
           <div class="mb-3">
             <label class="form-label" for="service">Service Needed</label>
             <select class="form-select" id="service" name="service" required>
@@ -116,21 +121,29 @@
               <option value="Maintenance & Fluids">Maintenance & Fluids</option>
             </select>
           </div>
+
+          <div class="mb-3">
+            <label class="form-label" for="parts">Parts Needed / Notes</label>
+            <textarea class="form-control" id="parts" name="parts" rows="2" placeholder="Optional: list parts or specific requests"></textarea>
+          </div>
+
           <div class="mb-3">
             <label class="form-label" for="message">Additional Notes</label>
-            <textarea class="form-control" id="message" name="message" rows="4"></textarea>
+            <textarea class="form-control" id="message" name="message" rows="4" placeholder="Other information we should know"></textarea>
           </div>
+
           <div class="text-center">
-            <button type="submit" class="btn btn-submit">Submit Appointment</button>
+            <button type="submit" class="btn-submit">Submit Appointment</button>
           </div>
         </form>
+
       </div>
     </div>
   </div>
 </section>
 
 <!-- Contact Section -->
-<section data-bs-version="5.1" class="contacts02 map1 cid-v3BW1ZDWa1" id="contacts02-1n">
+<section data-bs-version="5.1" class="contacts02 map1 cid-v3BW1ZDWa1" id="contacts02-appointment">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-12 content-head">
