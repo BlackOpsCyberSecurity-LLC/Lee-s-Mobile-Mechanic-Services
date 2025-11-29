@@ -165,7 +165,7 @@
   <script src="https://r.mobirisesite.com/1997632/assets/theme/js/script.js"></script>
 
   <script>
-    let vehicleData = {};
+    let vehicleData = {}, engineData = {};
     const yearSelect = document.getElementById('year');
     const makeSelect = document.getElementById('make');
     const modelSelect = document.getElementById('model');
@@ -173,20 +173,27 @@
     const vinBtn = document.getElementById('lookup-vin');
     const vinError = document.getElementById('vin-error');
     const vinHidden = document.getElementById('vin-hidden');
+    const engineTypeSelect = document.getElementById('engineType');
+    const engineLitersSelect = document.getElementById('engineLiters');
 
-    // Load JSON dynamically
+    // Load vehicle data
     fetch('vehicles_us.json')
       .then(resp => resp.json())
       .then(data => {
         vehicleData = data;
-        // Populate years
         Object.keys(vehicleData).sort((a,b)=>b-a).forEach(y=>{
           const opt = document.createElement('option'); opt.value=y; opt.textContent=y; yearSelect.appendChild(opt);
         });
       })
       .catch(err => console.error("Error loading vehicle data:", err));
 
-    // Make dropdown
+    // Load engine data
+    fetch('vehicle_engines.json')
+      .then(resp => resp.json())
+      .then(data => engineData = data)
+      .catch(err => console.error("Error loading engine data:", err));
+
+    // Populate Make dropdown
     yearSelect.addEventListener('change', function(){
       makeSelect.innerHTML = '<option value="">Select Make</option>';
       modelSelect.innerHTML = '<option value="">Select Model</option>';
@@ -197,7 +204,7 @@
       });
     });
 
-    // Model dropdown
+    // Populate Model dropdown
     makeSelect.addEventListener('change', function(){
       modelSelect.innerHTML = '<option value="">Select Model</option>';
       const year = yearSelect.value;
@@ -208,7 +215,7 @@
       });
     });
 
-    // VIN lookup demo
+    // VIN lookup with engine fill
     vinBtn.addEventListener('click', function(){
       const vin = vinInput.value.trim();
       vinError.style.display = "none";
@@ -217,19 +224,29 @@
         vinError.style.display = "block";
         return;
       }
-      // Random demo fill
+
+      // Random demo Year/Make/Model selection
       const years = Object.keys(vehicleData);
-      const year = years[parseInt(vin.slice(-4),16) % years.length];
+      const year = years[parseInt(vin.slice(-4),16)%years.length];
       const makes = Object.keys(vehicleData[year]);
-      const make = makes[parseInt(vin.slice(-3),16) % makes.length];
+      const make = makes[parseInt(vin.slice(-3),16)%makes.length];
       const models = vehicleData[year][make];
-      const model = models[parseInt(vin.slice(-2),16) % models.length];
+      const model = models[parseInt(vin.slice(-2),16)%models.length];
 
       yearSelect.value = year; yearSelect.dispatchEvent(new Event('change'));
       makeSelect.value = make; makeSelect.dispatchEvent(new Event('change'));
       modelSelect.value = model;
-
       vinHidden.value = vin;
+
+      // Engine type & liter
+      if(engineData[make] && engineData[make][model] && engineData[make][model][year]){
+        const eng = engineData[make][model][year];
+        engineTypeSelect.value = [...engineTypeSelect.options].some(o=>o.value===eng.engine_type)?eng.engine_type:"Other";
+        engineLitersSelect.value = [...engineLitersSelect.options].some(o=>o.value===eng.engine_liters)?eng.engine_liters:"Other";
+      } else {
+        engineTypeSelect.value = "Other";
+        engineLitersSelect.value = "Other";
+      }
     });
 
     // Success message
