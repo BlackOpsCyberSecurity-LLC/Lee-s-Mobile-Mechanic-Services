@@ -31,8 +31,13 @@
 
     #success-message { display: none; margin-top: 1rem; color: green; font-weight: bold; text-align: center; }
     #vin-loading { display: none; margin-left: 1rem; font-size: 0.9rem; color: #007bff; }
+
+    .select2-container--default .select2-selection--single { height: 52px !important; border: 2px solid #000 !important; font-size: 1.1rem !important; font-weight: 500; }
+    .select2-container--default .select2-selection--single .select2-selection__rendered { line-height: 52px !important; }
+    .select2-container--default .select2-selection--single .select2-selection__arrow { height: 52px !important; }
   </style>
 </head>
+
 <body>
 <main>
   <section class="container">
@@ -40,17 +45,12 @@
       <h2>Book Your Appointment</h2>
       <form id="appointment-form" action="https://usebasin.com/f/d459393c2dd6" method="POST" enctype="multipart/form-data">
 
-        <!-- Personal Information -->
+        <!-- Personal Info -->
         <h4><i class="bi bi-person-fill"></i> Personal Information</h4>
         <div class="mb-3"><label class="form-label">Full Name</label><input name="full_name" type="text" class="form-control" placeholder="John Doe" required></div>
         <div class="mb-3"><label class="form-label">Email</label><input name="email" type="email" class="form-control" placeholder="you@example.com" required></div>
         <div class="mb-3"><label class="form-label">Phone</label><input name="phone" type="tel" class="form-control" placeholder="239-441-8552" required></div>
-
-        <!-- Service Address -->
-        <div class="mb-3">
-          <label class="form-label">Service Address</label>
-          <input name="address" id="address" type="text" class="form-control" placeholder="123 Main St, City, State">
-        </div>
+        <div class="mb-3"><label class="form-label">Service Address</label><input name="address" type="text" class="form-control" placeholder="123 Main St, City, State"></div>
 
         <!-- VIN Lookup -->
         <h4><i class="bi bi-upc-scan"></i> Vehicle VIN Lookup</h4>
@@ -62,87 +62,137 @@
         <div id="vin-error" class="text-danger mb-3" style="display:none;"></div>
         <input type="hidden" name="vin" id="vin-hidden">
 
-        <!-- Vehicle Information -->
+        <!-- Vehicle Info -->
         <h4><i class="bi bi-car-front-fill"></i> Vehicle Information</h4>
         <div class="row">
-          <div class="col-md-3 mb-3"><label class="form-label">Year</label><select name="vehicle_year" id="year" class="form-select"></select></div>
-          <div class="col-md-3 mb-3"><label class="form-label">Make</label><select name="vehicle_make" id="make" class="form-select"></select></div>
-          <div class="col-md-3 mb-3"><label class="form-label">Model</label><select name="vehicle_model" id="model" class="form-select"></select></div>
-          <div class="col-md-3 mb-3"><label class="form-label">Engine Type</label><select name="engine_type" id="engineType" class="form-select">
-            <option value="">Select Engine Type</option>
-            <option>I4</option><option>I6</option><option>V6</option><option>V8</option>
-            <option>V12</option><option>Boxer</option><option>Electric / Hybrid</option><option>Other</option>
-          </select></div>
+          <div class="col-md-3 mb-3">
+            <label class="form-label">Year</label>
+            <select name="vehicle_year" id="year" class="form-select">
+              <option value="">Select Year</option>
+              <script>for(let y=2025;y>=1980;y--){document.write(`<option value="${y}">${y}</option>`);}</script>
+            </select>
+          </div>
+          <div class="col-md-3 mb-3">
+            <label class="form-label">Make</label>
+            <select name="vehicle_make" id="make" class="form-select">
+              <option value="">Select Make</option>
+              <option>Toyota</option>
+              <option>Honda</option>
+              <option>Ford</option>
+              <option>Chevrolet</option>
+              <option>Nissan</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="col-md-3 mb-3">
+            <label class="form-label">Model</label>
+            <select name="vehicle_model" id="model" class="form-select">
+              <option value="">Select Model</option>
+            </select>
+          </div>
+          <div class="col-md-3 mb-3">
+            <label class="form-label">Engine Type</label>
+            <select name="engine_type" id="engineType" class="form-select">
+              <option value="">Select Engine Type</option>
+              <option>I4</option>
+              <option>I6</option>
+              <option>V6</option>
+              <option>V8</option>
+              <option>V12</option>
+              <option>Boxer</option>
+              <option>Electric / Hybrid</option>
+              <option>Other</option>
+            </select>
+          </div>
         </div>
         <div class="row">
-          <div class="col-md-3 mb-3"><label class="form-label">Engine Liter</label><select name="engine_liters" id="engineLiters" class="form-select"></select></div>
+          <div class="col-md-3 mb-3">
+            <label class="form-label">Engine Liter</label>
+            <select name="engine_liters" id="engineLiters" class="form-select">
+              <option value="">Select Engine Liter</option>
+              <option>1.0</option><option>1.2</option><option>1.4</option>
+              <option>1.5</option><option>1.6</option><option>1.8</option>
+              <option>2.0</option><option>2.4</option><option>2.5</option>
+              <option>3.0</option><option>3.2</option><option>3.5</option>
+              <option>4.0</option><option>4.2</option><option>4.5</option>
+              <option>5.0</option><option>Other</option>
+            </select>
+          </div>
         </div>
 
         <!-- Requested Services -->
         <h4><i class="bi bi-tools"></i> Requested Services</h4>
         <select id="services" name="services[]" class="form-select" multiple>
+          <optgroup label="Maintenance">
+            <option value="Oil Change">Oil Change ($35–$60)</option>
+            <option value="Brake Pads Replacement">Brake Pads Replacement ($65–$110)</option>
+            <option value="Air Filter">Air Filter ($20–$35)</option>
+            <option value="Fluid Top-Off / Basic Service">Fluid Top-Off / Basic Service ($25–$35)</option>
+            <option value="Tune-Up / Spark Plugs">Tune-Up / Spark Plugs ($50–$90)</option>
+          </optgroup>
           <optgroup label="Diagnostics">
-            <option value="Full Vehicle Diagnostic Scan">Full Vehicle Diagnostic Scan ($50)</option>
-            <option value="Check Engine Light Troubleshooting">Check Engine Light Troubleshooting ($60)</option>
-            <option value="Electrical/Starting System Diagnostic">Electrical/Starting System Diagnostic ($90)</option>
+            <option value="Full Vehicle Diagnostic Scan">Full Vehicle Diagnostic Scan ($35–$50)</option>
+            <option value="Check Engine Light Troubleshooting">Check Engine Light Troubleshooting ($30–$60)</option>
+            <option value="Electrical/Starting System Diagnostic">Electrical/Starting System Diagnostic ($50–$90)</option>
           </optgroup>
           <optgroup label="Suspension & Steering">
-            <option value="Shocks / Struts">Shocks / Struts ($160)</option>
-            <option value="Control Arms / Bushings">Control Arms / Bushings ($160)</option>
-            <option value="Ball Joints">Ball Joints ($160)</option>
-            <option value="Tie Rod Ends">Tie Rod Ends ($160)</option>
-            <option value="Steering Rack / Gear">Steering Rack / Gear ($250)</option>
+            <option value="Shocks / Struts">Shocks / Struts ($90–$160)</option>
+            <option value="Control Arms / Bushings">Control Arms / Bushings ($90–$160)</option>
+            <option value="Ball Joints">Ball Joints ($70–$160)</option>
+            <option value="Tie Rod Ends">Tie Rod Ends ($85–$160)</option>
+            <option value="Steering Rack / Gear">Steering Rack / Gear ($180–$250)</option>
           </optgroup>
           <optgroup label="Brakes">
-            <option value="Brake Pads (Front or Rear)">Brake Pads (Front or Rear) ($110)</option>
-            <option value="Pads + Rotors">Pads + Rotors ($150)</option>
-            <option value="Brake Calipers">Brake Calipers ($120)</option>
-            <option value="Brake Lines / Hoses">Brake Lines / Hoses ($180)</option>
-            <option value="Brake Fluid Flush">Brake Fluid Flush ($90)</option>
+            <option value="Brake Pads (Front or Rear)">Brake Pads (Front or Rear) ($65–$110)</option>
+            <option value="Pads + Rotors">Pads + Rotors ($90–$150)</option>
+            <option value="Brake Calipers">Brake Calipers ($70–$120)</option>
+            <option value="Brake Lines / Hoses">Brake Lines / Hoses ($70–$180)</option>
+            <option value="Brake Fluid Flush">Brake Fluid Flush ($45–$90)</option>
           </optgroup>
           <optgroup label="Engine & Exhaust">
-            <option value="Alternator Replacement">Alternator Replacement ($160)</option>
-            <option value="Starter Replacement">Starter Replacement ($160)</option>
-            <option value="Battery Replacement">Battery Replacement ($35)</option>
-            <option value="Radiator Replacement">Radiator Replacement ($160)</option>
-            <option value="Water Pump Replacement">Water Pump Replacement ($160)</option>
-            <option value="Serpentine Belt">Serpentine Belt ($40)</option>
-            <option value="Thermostat Replacement">Thermostat Replacement ($50)</option>
-            <option value="Head Gasket Replacement">Head Gasket Replacement ($700)</option>
-            <option value="Engine Overhaul / Major Repair">Engine Overhaul / Major Repair ($1,500)</option>
-            <option value="Muffler Replacement">Muffler Replacement ($160)</option>
-            <option value="Catalytic Converter">Catalytic Converter ($200)</option>
-            <option value="Exhaust Piping / Manifold">Exhaust Piping / Manifold ($160)</option>
-            <option value="Oxygen Sensor Replacement">Oxygen Sensor Replacement ($60)</option>
+            <option value="Alternator Replacement">Alternator Replacement ($70–$160)</option>
+            <option value="Starter Replacement">Starter Replacement ($70–$160)</option>
+            <option value="Battery Replacement">Battery Replacement ($25–$35)</option>
+            <option value="Radiator Replacement">Radiator Replacement ($90–$160)</option>
+            <option value="Water Pump Replacement">Water Pump Replacement ($90–$160)</option>
+            <option value="Serpentine Belt">Serpentine Belt ($25–$40)</option>
+            <option value="Thermostat Replacement">Thermostat Replacement ($40–$50)</option>
+            <option value="Head Gasket Replacement">Head Gasket Replacement ($450–$700)</option>
+            <option value="Engine Overhaul / Major Repair">Engine Overhaul / Major Repair ($900–$1,500)</option>
+            <option value="Muffler Replacement">Muffler Replacement ($50–$160)</option>
+            <option value="Catalytic Converter">Catalytic Converter ($100–$200)</option>
+            <option value="Exhaust Piping / Manifold">Exhaust Piping / Manifold ($90–$160)</option>
+            <option value="Oxygen Sensor Replacement">Oxygen Sensor Replacement ($40–$60)</option>
           </optgroup>
           <optgroup label="Fuel & Maintenance">
-            <option value="Fuel Pump Replacement">Fuel Pump Replacement ($270)</option>
-            <option value="Fuel Filter Replacement">Fuel Filter Replacement ($55)</option>
-            <option value="Fuel Injector Cleaning / Replacement">Fuel Injector Cleaning / Replacement ($150)</option>
-            <option value="Carburetor / EFI Service">Carburetor / EFI Service ($160)</option>
-            <option value="Oil Change (Mobile)">Oil Change (Mobile) ($60)</option>
-            <option value="Tune-Up / Spark Plugs">Tune-Up / Spark Plugs ($90)</option>
-            <option value="Air Filter Replacement">Air Filter Replacement ($35)</option>
-            <option value="Fluid Top-Off / Basic Service">Fluid Top-Off / Basic Service ($35)</option>
+            <option value="Fuel Pump Replacement">Fuel Pump Replacement ($150–$270)</option>
+            <option value="Fuel Filter Replacement">Fuel Filter Replacement ($25–$55)</option>
+            <option value="Fuel Injector Cleaning / Replacement">Fuel Injector Cleaning / Replacement ($90–$150)</option>
+            <option value="Carburetor / EFI Service">Carburetor / EFI Service ($70–$160)</option>
+            <option value="Oil Change (Mobile)">Oil Change (Mobile) ($35–$60)</option>
+            <option value="Tune-Up / Spark Plugs">Tune-Up / Spark Plugs ($50–$90)</option>
+            <option value="Air Filter Replacement">Air Filter Replacement ($20–$35)</option>
+            <option value="Fluid Top-Off / Basic Service">Fluid Top-Off / Basic Service ($25–$35)</option>
           </optgroup>
           <optgroup label="Roadside & Electrical">
-            <option value="Jump-Start">Jump-Start ($35)</option>
-            <option value="Battery Testing">Battery Testing ($30)</option>
-            <option value="Lockout Service (Non-destructive)">Lockout Service ($75)</option>
-            <option value="Flat Tire Replacement / Repair">Flat Tire Replacement / Repair ($140)</option>
-            <option value="Emergency Breakdown Diagnostic">Emergency Breakdown Diagnostic ($90)</option>
+            <option value="Jump-Start">Jump-Start ($25–$35)</option>
+            <option value="Battery Testing">Battery Testing ($15–$30)</option>
+            <option value="Lockout Service (Non-destructive)">Lockout Service ($45–$75)</option>
+            <option value="Flat Tire Replacement / Repair">Flat Tire Replacement / Repair ($80–$140)</option>
+            <option value="Emergency Breakdown Diagnostic">Emergency Breakdown Diagnostic ($65–$90)</option>
             <option value="Standard Service Call">Standard Service Call (Free)</option>
-            <option value="Emergency / After-Hours Call">Emergency / After-Hours Call ($40)</option>
-            <option value="Alternator / Starter Diagnostics">Alternator / Starter Diagnostics ($65)</option>
-            <option value="Sensor Replacement (O2, MAF, etc.)">Sensor Replacement ($90)</option>
-            <option value="Wiring / Harness Repair">Wiring / Harness Repair ($220)</option>
-            <option value="ECU / Computer Diagnostics">ECU / Computer Diagnostics ($90)</option>
+            <option value="Emergency / After-Hours Call">Emergency / After-Hours Call ($25–$40)</option>
+            <option value="Alternator / Starter Diagnostics">Alternator / Starter Diagnostics ($40–$65)</option>
+            <option value="Sensor Replacement (O2, MAF, etc.)">Sensor Replacement ($50–$90)</option>
+            <option value="Wiring / Harness Repair">Wiring / Harness Repair ($90–$220)</option>
+            <option value="ECU / Computer Diagnostics">ECU / Computer Diagnostics ($50–$90)</option>
           </optgroup>
         </select>
 
+        <!-- Price Box -->
         <div id="price-box" class="mt-3 mb-3">Estimated Total: $0.00</div>
 
-        <!-- Appointment Date -->
+        <!-- Appointment Date & Time -->
         <h4><i class="bi bi-calendar-event"></i> Appointment Date & Time</h4>
         <div class="row">
           <div class="col-md-6 mb-3">
@@ -160,13 +210,12 @@
           </div>
         </div>
 
-        <!-- Photo Upload -->
-        <h4><i class="bi bi-image"></i> Upload Photos (optional)</h4>
-        <input type="file" name="photos[]" class="form-control mb-3" accept="image/*" multiple>
-
-        <!-- Notes -->
+        <!-- Notes / Photos -->
         <h4><i class="bi bi-journal-text"></i> Notes / Observations</h4>
         <textarea name="notes" class="form-control" rows="4" placeholder="Describe the issue..."></textarea>
+
+        <h4><i class="bi bi-image"></i> Upload Photos (optional)</h4>
+        <input type="file" name="photos[]" class="form-control mb-3" accept="image/*" multiple>
 
         <button type="submit" class="submit-btn mt-4">Submit</button>
         <div id="success-message">Your appointment has been submitted successfully!</div>
@@ -188,6 +237,9 @@
 
 <script>
 $(document).ready(function(){
+  // Enable searchable dropdowns
+  $('#year,#make,#model,#engineType,#engineLiters,#services').select2({width:'100%'});
+
   const yearSelect = $('#year');
   const makeSelect = $('#make');
   const modelSelect = $('#model');
@@ -201,110 +253,86 @@ $(document).ready(function(){
   const services = $('#services');
   const priceBox = $('#price-box');
 
-  $('#year,#make,#model,#engineType,#engineLiters,#services').select2({ width:'100%' });
+  // Load vehicle data for dynamic models if vehicles_us.json exists
+  let vehicleData = {};
+  fetch('vehicles_us.json')
+    .then(res => res.json())
+    .then(data => vehicleData = data)
+    .catch(err => console.log("No vehicle JSON found or error:", err));
 
-  const SERVICE_PRICES = {
-    "Full Vehicle Diagnostic Scan": 50,
-    "Check Engine Light Troubleshooting": 60,
-    "Electrical/Starting System Diagnostic": 90,
-    "Shocks / Struts": 160,
-    "Control Arms / Bushings": 160,
-    "Ball Joints": 160,
-    "Tie Rod Ends": 160,
-    "Steering Rack / Gear": 250,
-    "Brake Pads (Front or Rear)": 110,
-    "Pads + Rotors": 150,
-    "Brake Calipers": 120,
-    "Brake Lines / Hoses": 180,
-    "Brake Fluid Flush": 90,
-    "Alternator Replacement": 160,
-    "Starter Replacement": 160,
-    "Battery Replacement": 35,
-    "Radiator Replacement": 160,
-    "Water Pump Replacement": 160,
-    "Serpentine Belt": 40,
-    "Thermostat Replacement": 50,
-    "Head Gasket Replacement": 700,
-    "Engine Overhaul / Major Repair": 1500,
-    "Muffler Replacement": 160,
-    "Catalytic Converter": 200,
-    "Exhaust Piping / Manifold": 160,
-    "Oxygen Sensor Replacement": 60,
-    "Fuel Pump Replacement": 270,
-    "Fuel Filter Replacement": 55,
-    "Fuel Injector Cleaning / Replacement": 150,
-    "Carburetor / EFI Service": 160,
-    "Oil Change (Mobile)": 60,
-    "Tune-Up / Spark Plugs": 90,
-    "Air Filter Replacement": 35,
-    "Fluid Top-Off / Basic Service": 35,
-    "Jump-Start": 35,
-    "Battery Testing": 30,
-    "Lockout Service (Non-destructive)": 75,
-    "Flat Tire Replacement / Repair": 140,
-    "Emergency Breakdown Diagnostic": 90,
-    "Standard Service Call": 0,
-    "Emergency / After-Hours Call": 40,
-    "Alternator / Starter Diagnostics": 65,
-    "Sensor Replacement (O2, MAF, etc.)": 90,
-    "Wiring / Harness Repair": 220,
-    "ECU / Computer Diagnostics": 90
-  };
-
-  // VIN lookup
-  vinBtn.on('click', function() {
-    const vin = vinInput.val().trim();
-    vinError.hide();
-    if (vin.length !== 17) { vinError.text("VIN must be exactly 17 characters.").show(); return; }
-    vinLoading.show();
-
-    fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValues/${vin}?format=json`)
-      .then(res => res.json())
-      .then(data => {
-        vinLoading.hide();
-        const result = data.Results[0];
-        if (!result) { vinError.text("Unable to decode VIN").show(); return; }
-
-        // YEAR
-        if (result.ModelYear) {
-          if ($('#year option[value="'+result.ModelYear+'"]').length === 0) yearSelect.append(new Option(result.ModelYear, result.ModelYear));
-          yearSelect.val(result.ModelYear).trigger('change');
-        }
-
-        // MAKE
-        if (result.Make) {
-          if ($('#make option[value="'+result.Make+'"]').length === 0) makeSelect.append(new Option(result.Make, result.Make));
-          makeSelect.val(result.Make).trigger('change');
-        }
-
-        // MODEL
-        if (result.Model) {
-          if ($('#model option[value="'+result.Model+'"]').length === 0) modelSelect.append(new Option(result.Model, result.Model));
-          modelSelect.val(result.Model).trigger('change');
-        }
-
-        // ENGINE TYPE
-        if (result.EngineConfiguration) {
-          if ($('#engineType option[value="'+result.EngineConfiguration+'"]').length === 0) engineTypeSelect.append(new Option(result.EngineConfiguration, result.EngineConfiguration));
-          engineTypeSelect.val(result.EngineConfiguration).trigger('change');
-        } else if (result.EngineCylinders) {
-          const val = result.EngineCylinders + " Cyl";
-          if ($('#engineType option[value="'+val+'"]').length === 0) engineTypeSelect.append(new Option(val, val));
-          engineTypeSelect.val(val).trigger('change');
-        }
-
-        // ENGINE LITER
-        if (result.DisplacementL) {
-          if ($('#engineLiters option[value="'+result.DisplacementL+'"]').length === 0) engineLiterSelect.append(new Option(result.DisplacementL + " L", result.DisplacementL));
-          engineLiterSelect.val(result.DisplacementL).trigger('change');
-        }
-
-        vinHidden.val(vin);
-      })
-      .catch(err => { vinLoading.hide(); vinError.text("VIN lookup failed. Try again.").show(); console.error(err); });
+  // Populate models dynamically if user selects year/make manually
+  yearSelect.on('change', function(){
+    modelSelect.empty().append(new Option('Select Model',''));
+    const y = $(this).val();
+    const m = makeSelect.val();
+    if(y && m && vehicleData[y] && vehicleData[y][m]){
+      vehicleData[y][m].forEach(mod => modelSelect.append(new Option(mod,mod)));
+    }
   });
 
-  // Price estimator
+  makeSelect.on('change', function(){
+    modelSelect.empty().append(new Option('Select Model',''));
+    const y = yearSelect.val();
+    const m = $(this).val();
+    if(y && m && vehicleData[y] && vehicleData[y][m]){
+      vehicleData[y][m].forEach(mod => modelSelect.append(new Option(mod,mod)));
+    }
+  });
+
+  // VIN Lookup
+  vinBtn.on('click', function(){
+    const vin = vinInput.val().trim();
+    vinError.hide();
+    if(vin.length !== 17){ vinError.text("VIN must be 17 characters.").show(); return; }
+
+    vinLoading.show();
+    fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValues/${vin}?format=json`)
+      .then(res => res.json())
+      .then(r => {
+        vinLoading.hide();
+        const info = r.Results[0];
+        if(!info){ vinError.text("Could not decode VIN").show(); return; }
+
+        if(info.ModelYear) yearSelect.val(info.ModelYear).trigger('change');
+        if(info.Make) makeSelect.val(info.Make).trigger('change');
+        if(info.Model) modelSelect.val(info.Model).trigger('change');
+        if(info.EngineConfiguration && info.EngineCylinders){
+          const val = `${info.EngineConfiguration} ${info.EngineCylinders}`;
+          if($('#engineType option[value="'+val+'"]').length === 0){
+            engineTypeSelect.append(new Option(val,val));
+          }
+          engineTypeSelect.val(val).trigger('change');
+        }
+        if(info.DisplacementL){
+          const val = info.DisplacementL;
+          if($('#engineLiters option[value="'+val+'"]').length === 0){
+            engineLiterSelect.append(new Option(val,val));
+          }
+          engineLiterSelect.val(val).trigger('change');
+        }
+        vinHidden.val(vin);
+      })
+      .catch(()=>{ vinLoading.hide(); vinError.text("VIN lookup failed. Try again.").show(); });
+  });
+
+  // Price Estimator
+  const SERVICE_PRICES = {
+    "Oil Change": 50,"Brake Pads Replacement": 90,"Air Filter": 30,"Fluid Top-Off / Basic Service":30,
+    "Tune-Up / Spark Plugs":70,"Full Vehicle Diagnostic Scan":45,"Check Engine Light Troubleshooting":50,
+    "Electrical/Starting System Diagnostic":70,"Shocks / Struts":125,"Control Arms / Bushings":125,
+    "Ball Joints":110,"Tie Rod Ends":120,"Steering Rack / Gear":215,"Brake Pads (Front or Rear)":90,
+    "Pads + Rotors":120,"Brake Calipers":95,"Brake Lines / Hoses":125,"Brake Fluid Flush":65,
+    "Alternator Replacement":160,"Starter Replacement":150,"Battery Replacement":30,"Radiator Replacement":125,
+    "Water Pump Replacement":125,"Serpentine Belt":30,"Thermostat Replacement":45,"Head Gasket Replacement":575,
+    "Engine Overhaul / Major Repair":1200,"Muffler Replacement":105,"Catalytic Converter":150,
+    "Exhaust Piping / Manifold":125,"Oxygen Sensor Replacement":50,"Fuel Pump Replacement":210,
+    "Fuel Filter Replacement":40,"Fuel Injector Cleaning / Replacement":120,"Carburetor / EFI Service":115,
+    "Jump-Start":30,"Battery Testing":25,"Lockout Service (Non-destructive)":60,"Flat Tire Replacement / Repair":110,
+    "Emergency Breakdown Diagnostic":75,"Standard Service Call":0,"Emergency / After-Hours Call":30,
+    "Alternator / Starter Diagnostics":55,"Sensor Replacement (O2, MAF, etc.)":70,"Wiring / Harness Repair":155,
+    "ECU / Computer Diagnostics":70
+  };
+
   services.on('change', function(){
     let total = 0;
     $(this).val().forEach(s => total += SERVICE_PRICES[s] || 0);
