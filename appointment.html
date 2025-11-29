@@ -12,9 +12,14 @@
   <link rel="stylesheet" href="https://r.mobirisesite.com/1997632/assets/dropdown/css/style.css">
   <link rel="stylesheet" href="https://r.mobirisesite.com/1997632/assets/animatecss/animate.css">
   <link rel="stylesheet" href="https://r.mobirisesite.com/1997632/assets/theme/css/style.css">
+  <link rel="preload" href="https://fonts.googleapis.com/css?family=Inter+Tight:100,200,300,400,500,600,700,800,900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter+Tight:100,200,300,400,500,600,700,800,900&display=swap">
+  </noscript>
+  <link rel="stylesheet" href="https://r.mobirisesite.com/1997632/assets/css/mbr-additional.css" type="text/css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
-
+  
   <style>
     body { display: flex; flex-direction: column; min-height: 100vh; }
     main { flex: 1; }
@@ -120,7 +125,7 @@
     <h2 class="text-center mb-4">Book Your Appointment</h2>
     <form id="appointment-form" action="https://usebasin.com/f/d459393c2dd6" method="POST">
 
-      <!-- Personal Information -->
+      <!-- Personal Info -->
       <h4><i class="bi bi-person-fill"></i> Personal Information</h4>
       <div class="mb-3">
         <label for="name" class="form-label">Full Name</label>
@@ -144,26 +149,20 @@
       <div id="vin-error" class="text-danger mb-3" style="display: none;"></div>
       <input type="hidden" name="vin" id="vin-hidden">
 
-      <!-- Vehicle Information -->
+      <!-- Vehicle Info -->
       <h4><i class="bi bi-car-front-fill"></i> Vehicle Information</h4>
       <div class="row">
         <div class="col-md-3 mb-3">
           <label for="year" class="form-label">Year</label>
-          <select name="vehicle_year" id="year" class="form-select">
-            <option value="">Select Year</option>
-          </select>
+          <select name="vehicle_year" id="year" class="form-select"><option value="">Select Year</option></select>
         </div>
         <div class="col-md-3 mb-3">
           <label for="make" class="form-label">Make</label>
-          <select name="vehicle_make" id="make" class="form-select">
-            <option value="">Select Make</option>
-          </select>
+          <select name="vehicle_make" id="make" class="form-select"><option value="">Select Make</option></select>
         </div>
         <div class="col-md-3 mb-3">
           <label for="model" class="form-label">Model</label>
-          <select name="vehicle_model" id="model" class="form-select">
-            <option value="">Select Model</option>
-          </select>
+          <select name="vehicle_model" id="model" class="form-select"><option value="">Select Model</option></select>
         </div>
         <div class="col-md-3 mb-3">
           <label for="engineType" class="form-label">Engine Type</label>
@@ -206,7 +205,7 @@
         </div>
       </div>
 
-      <!-- Services Required -->
+      <!-- Services & Parts -->
       <h4><i class="bi bi-tools"></i> Services Required</h4>
       <div class="mb-3">
         <select name="services_required[]" id="servicesRequired" class="form-select" multiple>
@@ -223,7 +222,6 @@
         <input type="text" id="servicesOther" name="services_other" class="form-control mt-2" placeholder="Specify other service">
       </div>
 
-      <!-- Parts Required -->
       <h4><i class="bi bi-box-seam"></i> Parts Required</h4>
       <div class="mb-3">
         <select name="parts_required[]" id="partsRequired" class="form-select" multiple>
@@ -239,7 +237,6 @@
         <input type="text" id="partsOther" name="parts_other" class="form-control mt-2" placeholder="Specify other part">
       </div>
 
-      <!-- Submit Button -->
       <div class="text-center mt-4">
         <button type="submit" class="submit-btn">Book Appointment</button>
       </div>
