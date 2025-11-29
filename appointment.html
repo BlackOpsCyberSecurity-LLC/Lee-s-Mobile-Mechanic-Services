@@ -165,7 +165,6 @@
   <script src="https://r.mobirisesite.com/1997632/assets/theme/js/script.js"></script>
 
   <script>
-    let vehicleData = {}, engineData = {};
     const yearSelect = document.getElementById('year');
     const makeSelect = document.getElementById('make');
     const modelSelect = document.getElementById('model');
@@ -176,46 +175,12 @@
     const engineTypeSelect = document.getElementById('engineType');
     const engineLitersSelect = document.getElementById('engineLiters');
 
-    // Load vehicle data
-    fetch('vehicles_us.json')
-      .then(resp => resp.json())
-      .then(data => {
-        vehicleData = data;
-        Object.keys(vehicleData).sort((a,b)=>b-a).forEach(y=>{
-          const opt = document.createElement('option'); opt.value=y; opt.textContent=y; yearSelect.appendChild(opt);
-        });
-      })
-      .catch(err => console.error("Error loading vehicle data:", err));
+    // Populate years (common range)
+    for(let y=1990; y<=2025; y++){
+      const opt = document.createElement('option');
+      opt.value = y; opt.textContent = y; yearSelect.appendChild(opt);
+    }
 
-    // Load engine data
-    fetch('vehicle_engines.json')
-      .then(resp => resp.json())
-      .then(data => engineData = data)
-      .catch(err => console.error("Error loading engine data:", err));
-
-    // Populate Make dropdown
-    yearSelect.addEventListener('change', function(){
-      makeSelect.innerHTML = '<option value="">Select Make</option>';
-      modelSelect.innerHTML = '<option value="">Select Model</option>';
-      const year = this.value;
-      if(!year || !vehicleData[year]) return;
-      Object.keys(vehicleData[year]).sort().forEach(make=>{
-        const opt=document.createElement('option'); opt.value=make; opt.textContent=make; makeSelect.appendChild(opt);
-      });
-    });
-
-    // Populate Model dropdown
-    makeSelect.addEventListener('change', function(){
-      modelSelect.innerHTML = '<option value="">Select Model</option>';
-      const year = yearSelect.value;
-      const make = this.value;
-      if(!year || !make || !vehicleData[year][make]) return;
-      vehicleData[year][make].sort().forEach(model=>{
-        const opt=document.createElement('option'); opt.value=model; opt.textContent=model; modelSelect.appendChild(opt);
-      });
-    });
-
-    // VIN lookup with engine fill
     vinBtn.addEventListener('click', function(){
       const vin = vinInput.value.trim();
       vinError.style.display = "none";
@@ -225,28 +190,28 @@
         return;
       }
 
-      // Random demo Year/Make/Model selection
-      const years = Object.keys(vehicleData);
-      const year = years[parseInt(vin.slice(-4),16)%years.length];
-      const makes = Object.keys(vehicleData[year]);
-      const make = makes[parseInt(vin.slice(-3),16)%makes.length];
-      const models = vehicleData[year][make];
-      const model = models[parseInt(vin.slice(-2),16)%models.length];
-
-      yearSelect.value = year; yearSelect.dispatchEvent(new Event('change'));
-      makeSelect.value = make; makeSelect.dispatchEvent(new Event('change'));
-      modelSelect.value = model;
       vinHidden.value = vin;
+      document.getElementById('vin-loading').style.display = 'inline';
 
-      // Engine type & liter
-      if(engineData[make] && engineData[make][model] && engineData[make][model][year]){
-        const eng = engineData[make][model][year];
-        engineTypeSelect.value = [...engineTypeSelect.options].some(o=>o.value===eng.engine_type)?eng.engine_type:"Other";
-        engineLitersSelect.value = [...engineLitersSelect.options].some(o=>o.value===eng.engine_liters)?eng.engine_liters:"Other";
-      } else {
-        engineTypeSelect.value = "Other";
-        engineLitersSelect.value = "Other";
-      }
+      fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/decodevinvalues/${vin}?format=json`)
+        .then(resp=>resp.json())
+        .then(data=>{
+          document.getElementById('vin-loading').style.display = 'none';
+          const v = data.Results[0];
+
+          // Fill dropdowns
+          if(v.ModelYear) { yearSelect.value = v.ModelYear; }
+          if(v.Make) { makeSelect.value = v.Make; }
+          if(v.Model) { modelSelect.value = v.Model; }
+          engineTypeSelect.value = v.EngineCylinders || "Other";
+          engineLitersSelect.value = v.DisplacementL || "Other";
+        })
+        .catch(err=>{
+          console.error(err);
+          document.getElementById('vin-loading').style.display = 'none';
+          vinError.textContent = "Error fetching vehicle info. Try again.";
+          vinError.style.display = "block";
+        });
     });
 
     // Success message
