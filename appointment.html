@@ -91,7 +91,9 @@
               <a class="navbar-caption text-black text-primary display-4">Lee's Mobile Mechanic Service</a>
             </span>
           </div>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbarSupportedContent" data-bs-target="#navbarSupportedContent" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-bs-toggle="collapse"
+            data-target="#navbarSupportedContent" data-bs-target="#navbarSupportedContent" aria-controls="navbarNavAltMarkup"
+            aria-expanded="false" aria-label="Toggle navigation">
             <div class="hamburger"><span></span><span></span><span></span><span></span></div>
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -113,6 +115,7 @@
       <div class="form-section">
         <h2 class="text-center mb-4">Book Your Appointment</h2>
         <form id="appointment-form" action="https://usebasin.com/f/d459393c2dd6" method="POST">
+
           <!-- Personal Information -->
           <h4><i class="bi bi-person-fill"></i> Personal Information</h4>
           <div class="mb-3">
@@ -127,6 +130,15 @@
             <label for="phone" class="form-label">Phone</label>
             <input name="phone" type="tel" class="form-control" id="phone" placeholder="239-441-8552" required>
           </div>
+
+          <!-- VIN Lookup -->
+          <h4><i class="bi bi-upc-scan"></i> Vehicle VIN Lookup</h4>
+          <div class="input-group mb-3">
+            <input type="text" id="vin" class="form-control" placeholder="Enter 17-character VIN" maxlength="17">
+            <button type="button" class="btn btn-secondary" id="lookup-vin">Lookup VIN</button>
+          </div>
+          <div id="vin-error" class="text-danger mb-3" style="display: none;"></div>
+          <input type="hidden" name="vin" id="vin-hidden">
 
           <!-- Vehicle Information -->
           <h4><i class="bi bi-car-front-fill"></i> Vehicle Information</h4>
@@ -160,7 +172,6 @@
               <option>Electrical/Starting System Diagnostic</option>
               <option>Oil Change (Mobile)</option>
               <option>Tune-Up / Spark Plugs</option>
-              <!-- add all other services here -->
             </select>
           </div>
 
@@ -195,7 +206,7 @@
 
   </main>
 
-  <!-- Footer (matches homepage) -->
+  <!-- Footer -->
   <footer class="footer py-3 bg-dark text-white mt-auto">
     <div class="container text-center">
       <p class="mb-0">&copy; 2025 Lee's Mobile Mechanic Service. All rights reserved.</p>
@@ -208,10 +219,12 @@
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
   <script>
+    // Initialize Select2
     $(document).ready(function() {
       $('.select2-multiple').select2({ theme: 'bootstrap-5', placeholder: 'Select one or more options' });
     });
 
+    // Vehicle Year-Make-Model dropdowns
     document.addEventListener("DOMContentLoaded", function() {
       const yearSelect = document.getElementById("year");
       const makeSelect = document.getElementById("make");
@@ -256,6 +269,71 @@
         .catch(err => console.error("Failed to load vehicles_us.json:", err));
     });
 
+    // VIN Lookup
+    document.getElementById("lookup-vin").addEventListener("click", function() {
+      const vin = document.getElementById("vin").value.trim().toUpperCase();
+      const errorMsg = document.getElementById("vin-error");
+      const vinHidden = document.getElementById("vin-hidden");
+      errorMsg.style.display = "none";
+
+      if (!vin || vin.length !== 17) {
+        errorMsg.textContent = "VIN must be 17 characters.";
+        errorMsg.style.display = "block";
+        return;
+      }
+
+      // Set hidden VIN field
+      vinHidden.value = vin;
+
+      fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/decodevin/${vin}?format=json`)
+        .then(res => res.json())
+        .then(data => {
+          const results = data.Results;
+          const year = results.find(r => r.Variable === "Model Year")?.Value || "";
+          const make = results.find(r => r.Variable === "Make")?.Value || "";
+          const model = results.find(r => r.Variable === "Model")?.Value || "";
+
+          if (!year || !make || !model) {
+            errorMsg.textContent = "Vehicle not found for this VIN.";
+            errorMsg.style.display = "block";
+            return;
+          }
+
+          // Fill the dropdowns
+          const yearSelect = document.getElementById("year");
+          const makeSelect = document.getElementById("make");
+          const modelSelect = document.getElementById("model");
+
+          if (![...yearSelect.options].some(o => o.value === year)) {
+            let opt = document.createElement("option");
+            opt.value = year;
+            opt.textContent = year;
+            yearSelect.appendChild(opt);
+          }
+          yearSelect.value = year;
+
+          makeSelect.innerHTML = `<option value="">Select Make</option>`;
+          let makeOpt = document.createElement("option");
+          makeOpt.value = make;
+          makeOpt.textContent = make;
+          makeSelect.appendChild(makeOpt);
+          makeSelect.value = make;
+
+          modelSelect.innerHTML = `<option value="">Select Model</option>`;
+          let modelOpt = document.createElement("option");
+          modelOpt.value = model;
+          modelOpt.textContent = model;
+          modelSelect.appendChild(modelOpt);
+          modelSelect.value = model;
+        })
+        .catch(err => {
+          console.error(err);
+          errorMsg.textContent = "Error fetching vehicle info. Try again.";
+          errorMsg.style.display = "block";
+        });
+    });
+
+    // Form success message
     document.getElementById("appointment-form").addEventListener("submit", function(event) {
       setTimeout(function() {
         document.getElementById("success-message").style.display = "block";
