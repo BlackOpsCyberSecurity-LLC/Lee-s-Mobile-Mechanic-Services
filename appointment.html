@@ -22,13 +22,31 @@
     .form-section h4 { background: #000; color: #fff; padding: 0.5rem 1rem; border-radius: 5px; margin-bottom: 1rem; }
     .submit-btn { background-color: #00aaff; color: white; font-size: 1.2rem; border-radius: 8px; padding: 12px 30px; border: none; }
     .submit-btn:hover { background-color: #0088cc; }
-    select.form-select, input.form-control { border: 2px solid #000 !important; height: 52px !important; font-size: 1.1rem !important; font-weight: 500; }
+
+    select.form-select, input.form-control {
+      border: 2px solid #000 !important;
+      height: 52px !important;
+      font-size: 1.1rem !important;
+      font-weight: 500;
+    }
+
+    .select2-container--default .select2-selection--multiple {
+      border: 2px solid #000 !important;
+      min-height: 52px !important;
+      font-size: 1rem;
+    }
+
+    #price-box {
+      background: #e8f7ff;
+      border: 2px solid #00aaff;
+      border-radius: 6px;
+      padding: 15px;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
     #success-message { display: none; margin-top: 1rem; color: green; font-weight: bold; text-align: center; }
     #vin-loading { display: none; margin-left: 1rem; font-size: 0.9rem; color: #007bff; }
-
-    .select2-container--default .select2-selection--single { height: 52px !important; border: 2px solid #000 !important; font-size: 1.1rem !important; font-weight: 500; }
-    .select2-container--default .select2-selection--single .select2-selection__rendered { line-height: 52px !important; }
-    .select2-container--default .select2-selection--single .select2-selection__arrow { height: 52px !important; }
   </style>
 </head>
 
@@ -37,15 +55,22 @@
   <section class="container">
     <div class="form-section">
       <h2>Book Your Appointment</h2>
-      <form id="appointment-form" action="https://usebasin.com/f/d459393c2dd6" method="POST">
 
-        <!-- Personal Info -->
+      <form id="appointment-form" action="https://usebasin.com/f/d459393c2dd6" method="POST" enctype="multipart/form-data">
+
+        <!-- PERSONAL INFO -->
         <h4><i class="bi bi-person-fill"></i> Personal Information</h4>
-        <div class="mb-3"><label class="form-label">Full Name</label><input name="full_name" type="text" class="form-control" placeholder="John Doe" required></div>
-        <div class="mb-3"><label class="form-label">Email</label><input name="email" type="email" class="form-control" placeholder="you@example.com" required></div>
-        <div class="mb-3"><label class="form-label">Phone</label><input name="phone" type="tel" class="form-control" placeholder="239-441-8552" required></div>
+        <div class="mb-3"><label class="form-label">Full Name</label><input name="full_name" type="text" class="form-control" required></div>
+        <div class="mb-3"><label class="form-label">Email</label><input name="email" type="email" class="form-control" required></div>
+        <div class="mb-3"><label class="form-label">Phone</label><input name="phone" type="tel" class="form-control" required></div>
 
-        <!-- VIN Lookup -->
+        <!-- NEW: ADDRESS -->
+        <div class="mb-3">
+          <label class="form-label">Service Address</label>
+          <input name="address" id="address" type="text" class="form-control" placeholder="123 Main St, City, State">
+        </div>
+
+        <!-- VIN LOOKUP -->
         <h4><i class="bi bi-upc-scan"></i> Vehicle VIN Lookup</h4>
         <div class="input-group mb-3">
           <input type="text" id="vin" class="form-control" placeholder="Enter 17-character VIN" maxlength="17">
@@ -55,29 +80,69 @@
         <div id="vin-error" class="text-danger mb-3" style="display:none;"></div>
         <input type="hidden" name="vin" id="vin-hidden">
 
-        <!-- Vehicle Info -->
+        <!-- VEHICLE INFO -->
         <h4><i class="bi bi-car-front-fill"></i> Vehicle Information</h4>
         <div class="row">
           <div class="col-md-3 mb-3"><label class="form-label">Year</label><select name="vehicle_year" id="year" class="form-select"></select></div>
           <div class="col-md-3 mb-3"><label class="form-label">Make</label><select name="vehicle_make" id="make" class="form-select"></select></div>
           <div class="col-md-3 mb-3"><label class="form-label">Model</label><select name="vehicle_model" id="model" class="form-select"></select></div>
-          <div class="col-md-3 mb-3"><label class="form-label">Engine Type</label><select name="engine_type" id="engineType" class="form-select">
-            <option value="">Select Engine Type</option>
-            <option>I4</option><option>I6</option><option>V6</option><option>V8</option>
-            <option>V12</option><option>Boxer</option><option>Electric / Hybrid</option><option>Other</option>
-          </select></div>
-        </div>
-        <div class="row">
-          <div class="col-md-3 mb-3"><label class="form-label">Engine Liter</label><select name="engine_liters" id="engineLiters" class="form-select">
-            <option value="">Select Engine Liter</option>
-            <option>1.0</option><option>1.2</option><option>1.4</option><option>1.5</option><option>1.6</option>
-            <option>1.8</option><option>2.0</option><option>2.4</option><option>2.5</option><option>3.0</option>
-            <option>3.2</option><option>3.5</option><option>4.0</option><option>4.2</option><option>4.5</option>
-            <option>5.0</option><option>Other</option>
-          </select></div>
+          <div class="col-md-3 mb-3"><label class="form-label">Engine Type</label><select name="engine_type" id="engineType" class="form-select"></select></div>
         </div>
 
-        <button type="submit" class="submit-btn">Submit</button>
+        <div class="row">
+          <div class="col-md-3 mb-3"><label class="form-label">Engine Liter</label><select name="engine_liters" id="engineLiters" class="form-select"></select></div>
+        </div>
+
+        <!-- NEW: SERVICES -->
+        <h4><i class="bi bi-tools"></i> Requested Services</h4>
+        <select id="services" name="services[]" class="form-select" multiple>
+          <optgroup label="Maintenance">
+            <option value="Oil Change">Oil Change ($65)</option>
+            <option value="Brake Pads Replacement">Brake Pads Replacement ($120)</option>
+            <option value="Air Filter">Air Filter ($35)</option>
+          </optgroup>
+          <optgroup label="Diagnostics">
+            <option value="Full Diagnostics">Full Diagnostics ($85)</option>
+            <option value="Check Engine Light">Check Engine Light Scan ($45)</option>
+          </optgroup>
+          <optgroup label="Repair">
+            <option value="Alternator Replacement">Alternator Replacement ($250)</option>
+            <option value="Starter Replacement">Starter Replacement ($220)</option>
+          </optgroup>
+        </select>
+
+        <!-- NEW: PRICE ESTIMATOR -->
+        <div id="price-box" class="mt-3 mb-3">Estimated Total: $0.00</div>
+
+        <!-- NEW: APPOINTMENT DATE -->
+        <h4><i class="bi bi-calendar-event"></i> Appointment Date & Time</h4>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Preferred Date</label>
+            <input type="date" name="appointment_date" id="apptDate" class="form-control" required>
+          </div>
+
+          <!-- NEW: TIME SLOT -->
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Preferred Time Slot</label>
+            <select name="appointment_time" class="form-select" required>
+              <option value="">Select Time</option>
+              <option>Morning (8AM - 12PM)</option>
+              <option>Afternoon (12PM - 4PM)</option>
+              <option>Evening (4PM - 7PM)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- NEW: PHOTO UPLOAD -->
+        <h4><i class="bi bi-image"></i> Upload Photos (optional)</h4>
+        <input type="file" name="photos[]" class="form-control mb-3" accept="image/*" multiple>
+
+        <!-- NEW: NOTES -->
+        <h4><i class="bi bi-journal-text"></i> Notes / Observations</h4>
+        <textarea name="notes" class="form-control" rows="4" placeholder="Describe the issue..."></textarea>
+
+        <button type="submit" class="submit-btn mt-4">Submit</button>
         <div id="success-message">Your appointment has been submitted successfully!</div>
       </form>
     </div>
@@ -90,6 +155,7 @@
   </div>
 </footer>
 
+
 <!-- JS -->
 <script src="https://r.mobirisesite.com/1997632/assets/web/assets/jquery/jquery.min.js"></script>
 <script src="https://r.mobirisesite.com/1997632/assets/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -101,80 +167,118 @@ $(document).ready(function(){
   const yearSelect = $('#year');
   const makeSelect = $('#make');
   const modelSelect = $('#model');
-  const engineTypeSelect = $('#engineType');
-  const engineLiterSelect = $('#engineLiters');
+  const engineType = $('#engineType');
+  const engineLiters = $('#engineLiters');
   const vinInput = $('#vin');
   const vinBtn = $('#lookup-vin');
   const vinError = $('#vin-error');
   const vinLoading = $('#vin-loading');
   const vinHidden = $('#vin-hidden');
+  const services = $('#services');
+  const priceBox = $('#price-box');
 
-  // Enable searchable dropdowns
-  $('#year,#make,#model,#engineType,#engineLiters').select2({width:'100%'});
+  const SERVICE_PRICES = {
+    "Oil Change": 65,
+    "Brake Pads Replacement": 120,
+    "Air Filter": 35,
+    "Full Diagnostics": 85,
+    "Check Engine Light": 45,
+    "Alternator Replacement": 250,
+    "Starter Replacement": 220
+  };
 
-  // Load vehicle options
+  // Select2
+  $('#year,#make,#model,#engineType,#engineLiters,#services').select2({ width:'100%' });
+
+  // Load vehicles_us.json
   let vehicleData = {};
   fetch('vehicles_us.json')
     .then(res => res.json())
     .then(data => {
       vehicleData = data;
       Object.keys(vehicleData).sort((a,b)=>b-a).forEach(y => yearSelect.append(new Option(y,y)));
-    })
-    .catch(err => console.error("Error loading vehicle data:", err));
+    });
 
-  // Year change -> populate makes
   yearSelect.on('change', function(){
     makeSelect.empty().append(new Option('Select Make',''));
     modelSelect.empty().append(new Option('Select Model',''));
     const y = $(this).val();
-    if(!y || !vehicleData[y]) return;
+    if (!y) return;
     Object.keys(vehicleData[y]).sort().forEach(make => makeSelect.append(new Option(make,make)));
   });
 
-  // Make change -> populate models
   makeSelect.on('change', function(){
     modelSelect.empty().append(new Option('Select Model',''));
     const y = yearSelect.val();
     const m = $(this).val();
-    if(!y || !m || !vehicleData[y][m]) return;
+    if (!y || !m) return;
     vehicleData[y][m].sort().forEach(mod => modelSelect.append(new Option(mod,mod)));
   });
 
-  // VIN lookup
+  // VIN Decode
   vinBtn.on('click', function(){
     const vin = vinInput.val().trim();
     vinError.hide();
-    if(vin.length !== 17){ vinError.text("VIN must be 17 characters.").show(); return; }
+
+    if (vin.length !== 17) {
+      vinError.text("VIN must be exactly 17 characters.").show();
+      return;
+    }
+
     vinLoading.show();
 
     fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValues/${vin}?format=json`)
-      .then(res => res.json())
-      .then(res => {
+      .then(r => r.json())
+      .then(r => {
         vinLoading.hide();
-        const result = res.Results[0];
-        if(!result){ vinError.text("Unable to decode VIN").show(); return; }
+        const info = r.Results[0];
 
-        if(result.ModelYear && vehicleData[result.ModelYear]) yearSelect.val(result.ModelYear).trigger('change');
-        if(result.Make) makeSelect.val(result.Make).trigger('change');
-        if(result.Model) modelSelect.val(result.Model).trigger('change');
-        if(result.EngineCylinders) engineTypeSelect.val(result.EngineCylinders+' Cyl').trigger('change');
-        if(result.DisplacementL) engineLiterSelect.val(result.DisplacementL).trigger('change');
+        if (!info) {
+          vinError.text("Could not decode VIN").show();
+          return;
+        }
+
+        if (info.ModelYear) yearSelect.val(info.ModelYear).trigger('change');
+        if (info.Make) makeSelect.val(info.Make).trigger('change');
+        if (info.Model) modelSelect.val(info.Model).trigger('change');
+
+        // Improved accuracy
+        if (info.EngineConfiguration && info.EngineCylinders) {
+          engineType.empty();
+          engineType.append(new Option(`${info.EngineConfiguration} - ${info.EngineCylinders} Cyl`, `${info.EngineConfiguration} ${info.EngineCylinders}`));
+          engineType.val(`${info.EngineConfiguration} ${info.EngineCylinders}`).trigger('change');
+        }
+
+        if (info.DisplacementL) {
+          engineLiters.empty();
+          engineLiters.append(new Option(info.DisplacementL + " L", info.DisplacementL));
+          engineLiters.val(info.DisplacementL).trigger('change');
+        }
 
         vinHidden.val(vin);
       })
-      .catch(err => { vinLoading.hide(); vinError.text("Error fetching VIN info").show(); console.error(err); });
+      .catch(() => {
+        vinLoading.hide();
+        vinError.text("VIN lookup failed. Try again.").show();
+      });
   });
 
-  // Form submit
+  // Price Estimator
+  services.on('change', function(){
+    let total = 0;
+    $(this).val().forEach(s => total += SERVICE_PRICES[s] || 0);
+    priceBox.text("Estimated Total: $" + total.toFixed(2));
+  });
+
+  // Form submit success message
   $("#appointment-form").on("submit", function(){
     setTimeout(function(){
       $("#success-message").show();
-      $("#appointment-form")[0].reset();
-      $('#year,#make,#model,#engineType,#engineLiters').val(null).trigger('change');
     },500);
   });
 
 });
 </script>
+
 </body>
 </html>
