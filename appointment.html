@@ -98,16 +98,6 @@
       height: 52px !important;
     }
 
-    #price-box {
-      background: #e8f7ff;
-      border: 2px solid #00aaff;
-      border-radius: 6px;
-      padding: 15px;
-      font-size: 1.2rem;
-      font-weight: bold;
-      text-align: center;
-    }
-
     #success-message {
       display: none;
       margin-top: 1rem;
@@ -211,64 +201,63 @@
           <h4><i class="bi bi-tools"></i> Requested Services</h4>
           <select id="services" name="services[]" class="form-select" multiple>
             <optgroup label="Diagnostics">
-              <option>Full Vehicle Diagnostic Scan</option>
-              <option>Check Engine Light Troubleshooting</option>
-              <option>Electrical/Starting System Diagnostic</option>
+              <option>Full Vehicle Diagnostic Scan ($35–$50)</option>
+              <option>Check Engine Light Troubleshooting ($30–$60)</option>
+              <option>Electrical/Starting System Diagnostic ($50–$90)</option>
             </optgroup>
             <optgroup label="Suspension & Steering">
-              <option>Shocks / Struts</option>
-              <option>Control Arms / Bushings</option>
-              <option>Ball Joints</option>
-              <option>Tie Rod Ends</option>
-              <option>Steering Rack / Gear</option>
+              <option>Shocks / Struts ($90–$160)</option>
+              <option>Control Arms / Bushings ($90–$160)</option>
+              <option>Ball Joints ($70–$160)</option>
+              <option>Tie Rod Ends ($85–$160)</option>
+              <option>Steering Rack / Gear ($180–$250)</option>
             </optgroup>
             <optgroup label="Brakes">
-              <option>Brake Pads (Front or Rear)</option>
-              <option>Pads + Rotors</option>
-              <option>Brake Calipers</option>
-              <option>Brake Lines / Hoses</option>
-              <option>Brake Fluid Flush</option>
+              <option>Brake Pads (Front or Rear) ($65–$110)</option>
+              <option>Pads + Rotors ($90–$150)</option>
+              <option>Brake Calipers ($70–$120)</option>
+              <option>Brake Lines / Hoses ($70–$180)</option>
+              <option>Brake Fluid Flush ($45–$90)</option>
             </optgroup>
             <optgroup label="Engine & Exhaust">
-              <option>Alternator Replacement</option>
-              <option>Starter Replacement</option>
-              <option>Battery Replacement</option>
-              <option>Radiator Replacement</option>
-              <option>Water Pump Replacement</option>
-              <option>Serpentine Belt</option>
-              <option>Thermostat Replacement</option>
-              <option>Head Gasket Replacement</option>
-              <option>Engine Overhaul / Major Repair</option>
-              <option>Muffler Replacement</option>
-              <option>Catalytic Converter</option>
-              <option>Exhaust Piping / Manifold</option>
-              <option>Oxygen Sensor Replacement</option>
+              <option>Alternator Replacement ($70–$160)</option>
+              <option>Starter Replacement ($70–$160)</option>
+              <option>Battery Replacement ($25–$35)</option>
+              <option>Radiator Replacement ($90–$160)</option>
+              <option>Water Pump Replacement ($90–$160)</option>
+              <option>Serpentine Belt ($25–$40)</option>
+              <option>Thermostat Replacement ($40–$50)</option>
+              <option>Head Gasket Replacement ($450–$700)</option>
+              <option>Engine Overhaul / Major Repair ($900–$1,500)</option>
+              <option>Muffler Replacement ($50–$160)</option>
+              <option>Catalytic Converter ($100–$200)</option>
+              <option>Exhaust Piping / Manifold ($90–$160)</option>
+              <option>Oxygen Sensor Replacement ($40–$60)</option>
             </optgroup>
             <optgroup label="Fuel & Maintenance">
-              <option>Fuel Pump Replacement</option>
-              <option>Fuel Filter Replacement</option>
-              <option>Fuel Injector Cleaning / Replacement</option>
-              <option>Carburetor / EFI Service</option>
-              <option>Oil Change (Mobile)</option>
-              <option>Tune-Up / Spark Plugs</option>
-              <option>Air Filter Replacement</option>
-              <option>Fluid Top-Off / Basic Service</option>
+              <option>Fuel Pump Replacement ($150–$270)</option>
+              <option>Fuel Filter Replacement ($25–$55)</option>
+              <option>Fuel Injector Cleaning / Replacement ($90–$150)</option>
+              <option>Carburetor / EFI Service ($70–$160)</option>
+              <option>Oil Change (Mobile) ($35–$60)</option>
+              <option>Tune-Up / Spark Plugs ($50–$90)</option>
+              <option>Air Filter Replacement ($20–$35)</option>
+              <option>Fluid Top-Off / Basic Service ($25–$35)</option>
             </optgroup>
             <optgroup label="Roadside & Electrical">
-              <option>Jump-Start</option>
-              <option>Battery Testing</option>
-              <option>Lockout Service (Non-destructive)</option>
-              <option>Flat Tire Replacement / Repair</option>
-              <option>Emergency Breakdown Diagnostic</option>
-              <option>Standard Service Call</option>
-              <option>Emergency / After-Hours Call</option>
-              <option>Alternator / Starter Diagnostics</option>
-              <option>Sensor Replacement (O2, MAF, etc.)</option>
-              <option>Wiring / Harness Repair</option>
-              <option>ECU / Computer Diagnostics</option>
+              <option>Jump-Start ($25–$35)</option>
+              <option>Battery Testing ($15–$30)</option>
+              <option>Lockout Service (Non-destructive) ($45–$75)</option>
+              <option>Flat Tire Replacement / Repair ($80–$140)</option>
+              <option>Emergency Breakdown Diagnostic ($65–$90)</option>
+              <option>Standard Service Call (Free)</option>
+              <option>Emergency / After-Hours Call ($25–$40)</option>
+              <option>Alternator / Starter Diagnostics ($40–$65)</option>
+              <option>Sensor Replacement (O2, MAF, etc.) ($50–$90)</option>
+              <option>Wiring / Harness Repair ($90–$220)</option>
+              <option>ECU / Computer Diagnostics ($50–$90)</option>
             </optgroup>
           </select>
-          <div id="price-box" class="mt-3 mb-3">Estimated Total: $0.00</div>
 
           <!-- Appointment -->
           <h4><i class="bi bi-calendar-event"></i> Appointment Date & Time</h4>
@@ -320,8 +309,6 @@
         vinError = $('#vin-error'),
         vinLoading = $('#vin-loading'),
         vinHidden = $('#vin-hidden');
-      const services = $('#services'),
-        priceBox = $('#price-box');
 
       // Initialize Select2
       $('#year,#make,#model,#engineType,#engineLiters,#services').select2({ width: '100%' });
@@ -390,17 +377,6 @@
           .catch(err => { vinLoading.hide(); vinError.text("VIN lookup failed. Try again").show(); console.log(err); });
       });
 
-      // Price calculation
-      function calculatePrice() {
-        let total = 0;
-        services.val()?.forEach(s => {
-          const nums = s.match(/\$([0-9]+)(?:–\$([0-9]+))?/);
-          if (nums) total += parseFloat(nums[1]);
-        });
-        priceBox.text(`Estimated Total: $${total.toFixed(2)}`);
-      }
-      services.on('change', calculatePrice);
-
       // Success message
       $('#appointment-form').on('submit', function (e) {
         e.preventDefault();
@@ -408,7 +384,6 @@
         $('#success-message').fadeIn().delay(4000).fadeOut();
         this.reset();
         $('#year,#make,#model,#engineType,#engineLiters,#services').val(null).trigger('change.select2');
-        priceBox.text(`Estimated Total: $0.00`);
       });
     });
   </script>
