@@ -5,34 +5,30 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
   <title>Book Appointment</title>
+
   <!-- CSS -->
   <link rel="stylesheet" href="https://r.mobirisesite.com/1997632/assets/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://r.mobirisesite.com/1997632/assets/dropdown/css/style.css">
+  <link rel="stylesheet" href="https://r.mobirisesite.com/1997632/assets/animatecss/animate.css">
   <link rel="stylesheet" href="https://r.mobirisesite.com/1997632/assets/theme/css/style.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://r.mobirisesite.com/1997632/assets/css/mbr-additional.css" type="text/css">
+
   <style>
     body { display: flex; flex-direction: column; min-height: 100vh; }
     main { flex: 1; }
     footer { flex-shrink: 0; }
     .form-section { background: #f8f9fa; padding: 2rem; border-radius: 8px; margin: 2rem auto; max-width: 900px; }
     .form-section h2 { text-align: center; margin-bottom: 2rem; }
-    .form-section h4 { background: #000; color: #fff; padding: 0.5rem 1rem; border-radius: 5px; margin-bottom: 1rem; }
     .submit-btn { background-color: #00aaff; color: white; font-size: 1.2rem; border-radius: 8px; padding: 12px 30px; border: none; }
     .submit-btn:hover { background-color: #0088cc; }
     select.form-select, input.form-control { border: 2px solid #000 !important; height: 52px !important; font-size: 1.1rem !important; font-weight: 500; }
-    .select2-container--default .select2-selection--multiple { border: 2px solid #000 !important; min-height: 52px !important; font-size: 1rem; }
-    #price-box { background: #e8f7ff; border: 2px solid #00aaff; border-radius: 6px; padding: 15px; font-size: 1.2rem; font-weight: bold; }
-    #success-message { display: none; margin-top: 1rem; color: green; font-weight: bold; text-align: center; }
-    #vin-loading { display: none; margin-left: 1rem; font-size: 0.9rem; color: #007bff; }
-    .select2-container--default .select2-selection--single { height: 52px !important; border: 2px solid #000 !important; font-size: 1.1rem !important; font-weight: 500; }
-    .select2-container--default .select2-selection--single .select2-selection__rendered { line-height: 52px !important; }
-    .select2-container--default .select2-selection--single .select2-selection__arrow { height: 52px !important; }
   </style>
 </head>
 <body>
 <main>
 
-<!-- Navbar (exactly like home page) -->
+<!-- Navbar (copied exactly from home page) -->
 <section data-bs-version="5.1" class="menu menu5 cid-v3BV98Nlzj" once="menu" id="menu05-1i">
   <nav class="navbar navbar-dropdown navbar-fixed-top navbar-expand-lg">
     <div class="container">
@@ -61,114 +57,30 @@
   </nav>
 </section>
 
+<!-- Appointment Form -->
 <div class="form-section">
   <h2>Book Your Appointment</h2>
   <form id="appointment-form" action="https://usebasin.com/f/d459393c2dd6" method="POST" enctype="multipart/form-data">
-    <!-- Personal Info -->
-    <h4><i class="bi bi-person-fill"></i> Personal Information</h4>
-    <div class="mb-3"><label class="form-label">Full Name</label><input name="full_name" type="text" class="form-control" placeholder="John Doe" required></div>
-    <div class="mb-3"><label class="form-label">Email</label><input name="email" type="email" class="form-control" placeholder="you@example.com" required></div>
-    <div class="mb-3"><label class="form-label">Phone</label><input name="phone" type="tel" class="form-control" placeholder="239-441-8552" required></div>
-    <div class="mb-3"><label class="form-label">Service Address</label><input name="address" type="text" class="form-control" placeholder="123 Main St, City, State"></div>
-    <!-- VIN Lookup -->
-    <h4><i class="bi bi-upc-scan"></i> Vehicle VIN Lookup</h4>
-    <div class="input-group mb-3">
-      <input type="text" id="vin" class="form-control" placeholder="Enter 17-character VIN" maxlength="17">
-      <button type="button" class="btn btn-secondary" id="lookup-vin">Lookup VIN</button>
-      <span id="vin-loading">Fetching vehicle info...</span>
+    <div class="mb-3">
+      <label class="form-label">Full Name</label>
+      <input name="full_name" type="text" class="form-control" placeholder="John Doe" required>
     </div>
-    <div id="vin-error" class="text-danger mb-3" style="display:none;"></div>
-    <input type="hidden" name="vin" id="vin-hidden">
-    <!-- Vehicle Info -->
-    <h4><i class="bi bi-car-front-fill"></i> Vehicle Information</h4>
-    <div class="row">
-      <div class="col-md-3 mb-3">
-        <label class="form-label">Year</label>
-        <select name="vehicle_year" id="year" class="form-select">
-          <option value="">Select Year</option>
-          <script>for(let y=2025;y>=1980;y--){document.write(`<option value="${y}">${y}</option>`);}</script>
-        </select>
-      </div>
-      <div class="col-md-3 mb-3">
-        <label class="form-label">Make</label>
-        <select name="vehicle_make" id="make" class="form-select">
-          <option value="">Select Make</option>
-        </select>
-      </div>
-      <div class="col-md-3 mb-3">
-        <label class="form-label">Model</label>
-        <select name="vehicle_model" id="model" class="form-select">
-          <option value="">Select Model</option>
-        </select>
-      </div>
-      <div class="col-md-3 mb-3">
-        <label class="form-label">Engine Type</label>
-        <select name="engine_type" id="engineType" class="form-select">
-          <option value="">Select Engine Type</option>
-          <option>I4</option>
-          <option>I6</option>
-          <option>V6</option>
-          <option>V8</option>
-          <option>V12</option>
-          <option>Boxer</option>
-          <option>Electric / Hybrid</option>
-          <option>Other</option>
-        </select>
-      </div>
+    <div class="mb-3">
+      <label class="form-label">Email</label>
+      <input name="email" type="email" class="form-control" placeholder="you@example.com" required>
     </div>
-    <div class="row">
-      <div class="col-md-3 mb-3">
-        <label class="form-label">Engine Liter</label>
-        <select name="engine_liters" id="engineLiters" class="form-select">
-          <option value="">Select Engine Liter</option>
-          <option>1.0</option><option>1.2</option><option>1.4</option>
-          <option>1.5</option><option>1.6</option><option>1.8</option>
-          <option>2.0</option><option>2.4</option><option>2.5</option>
-          <option>3.0</option><option>3.2</option><option>3.5</option>
-          <option>4.0</option><option>4.2</option><option>4.5</option>
-          <option>5.0</option><option>Other</option>
-        </select>
-      </div>
+    <div class="mb-3">
+      <label class="form-label">Phone</label>
+      <input name="phone" type="tel" class="form-control" placeholder="239-441-8552" required>
     </div>
-    <!-- Requested Services -->
-    <h4><i class="bi bi-tools"></i> Requested Services</h4>
-    <select id="services" name="services[]" class="form-select" multiple>
-      <optgroup label="Maintenance">
-        <option value="Oil Change">Oil Change ($35–$60)</option>
-        <option value="Brake Pads Replacement">Brake Pads Replacement ($65–$110)</option>
-        <option value="Air Filter">Air Filter ($20–$35)</option>
-        <option value="Fluid Top-Off / Basic Service">Fluid Top-Off / Basic Service ($25–$35)</option>
-        <option value="Tune-Up / Spark Plugs">Tune-Up / Spark Plugs ($50–$90)</option>
-      </optgroup>
-    </select>
-    <!-- Price Box -->
-    <div id="price-box" class="mt-3 mb-3">Estimated Total: $0.00</div>
-    <!-- Appointment Date & Time -->
-    <h4><i class="bi bi-calendar-event"></i> Appointment Date & Time</h4>
-    <div class="row">
-      <div class="col-md-6 mb-3">
-        <label class="form-label">Preferred Date</label>
-        <input type="date" name="appointment_date" id="apptDate" class="form-control" required>
-      </div>
-      <div class="col-md-6 mb-3">
-        <label class="form-label">Preferred Time Slot</label>
-        <select name="appointment_time" class="form-select" required>
-          <option value="">Select Time</option>
-          <option>Morning (8AM - 12PM)</option>
-          <option>Afternoon (12PM - 4PM)</option>
-          <option>Evening (4PM - 7PM)</option>
-        </select>
-      </div>
+    <div class="mb-3">
+      <label class="form-label">Service Address</label>
+      <input name="address" type="text" class="form-control" placeholder="123 Main St, City, State">
     </div>
-    <!-- Notes / Photos -->
-    <h4><i class="bi bi-journal-text"></i> Notes / Observations</h4>
-    <textarea name="notes" class="form-control" rows="4" placeholder="Describe the issue..."></textarea>
-    <h4><i class="bi bi-image"></i> Upload Photos (optional)</h4>
-    <input type="file" name="photos[]" class="form-control mb-3" accept="image/*" multiple>
     <button type="submit" class="submit-btn mt-4">Submit</button>
-    <div id="success-message">Your appointment has been submitted successfully!</div>
   </form>
 </div>
+
 </main>
 
 <footer class="footer py-3 bg-dark text-white mt-auto">
@@ -180,9 +92,8 @@
 <!-- JS -->
 <script src="https://r.mobirisesite.com/1997632/assets/web/assets/jquery/jquery.min.js"></script>
 <script src="https://r.mobirisesite.com/1997632/assets/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<script>
-// All your previous appointment page JS remains unchanged
-</script>
+<script src="https://r.mobirisesite.com/1997632/assets/dropdown/js/navbar-dropdown.js"></script>
+<script src="https://r.mobirisesite.com/1997632/assets/theme/js/script.js"></script>
+
 </body>
 </html>
