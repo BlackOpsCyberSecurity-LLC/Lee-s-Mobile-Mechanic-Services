@@ -261,4 +261,46 @@ $(document).ready(function(){
   vinBtn.on('click', ()=>{
     const vin = vinInput.val().trim();
     vinError.hide();
-    if
+    if(vin.length!==17){ vinError.text('VIN must be 17 characters').show(); return; }
+    vinLoading.show(); vinBtn.prop('disabled',true);
+    fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/decodevinvalues/${vin}?format=json`).then(r=>r.json()).then(data=>{
+      const result = data.Results[0];
+      yearSelect.val(result.ModelYear).trigger('change.select2');
+      setTimeout(()=>{ makeSelect.val(result.Make).trigger('change.select2'); updateModels(result.Model); },100);
+      setEngineType(result.EngineConfiguration || result.EngineCylinders);
+      setEngineLiter(result.DisplacementL);
+      vinHidden.val(vin);
+    }).catch(()=>{ vinError.text('VIN lookup failed').show(); })
+    .finally(()=>{ vinLoading.hide(); vinBtn.prop('disabled',false); });
+  });
+
+  // Service Prices
+  const SERVICE_PRICES = {
+    "Full Vehicle Diagnostic Scan":50,"Check Engine Light Troubleshooting":60,"Electrical/Starting System Diagnostic":90,
+    "Shocks / Struts":160,"Control Arms / Bushings":160,"Ball Joints":160,"Tie Rod Ends":160,"Steering Rack / Gear":250,
+    "Brake Pads (Front or Rear)":110,"Pads + Rotors":150,"Brake Calipers":120,"Brake Lines / Hoses":180,"Brake Fluid Flush":90,
+    "Alternator Replacement":160,"Starter Replacement":160,"Battery Replacement":35,"Radiator Replacement":160,"Water Pump Replacement":160,
+    "Serpentine Belt":40,"Thermostat Replacement":50,"Head Gasket Replacement":700,"Engine Overhaul / Major Repair":1500,"Muffler Replacement":160,
+    "Catalytic Converter":200,"Exhaust Piping / Manifold":160,"Oxygen Sensor Replacement":60,
+    "Fuel Pump Replacement":270,"Fuel Filter Replacement":55,"Fuel Injector Cleaning / Replacement":150,"Carburetor / EFI Service":160,
+    "Oil Change (Mobile)":60,"Tune-Up / Spark Plugs":90,"Air Filter Replacement":35,"Fluid Top-Off / Basic Service":35,
+    "Jump-Start":35,"Battery Testing":30,"Lockout Service (Non-destructive)":75,"Flat Tire Replacement / Repair":140,
+    "Emergency Breakdown Diagnostic":90,"Standard Service Call":0,"Emergency / After-Hours Call":40,
+    "Alternator / Starter Diagnostics":65,"Sensor Replacement (O2, MAF, etc.)":90,"Wiring / Harness Repair":220,"ECU / Computer Diagnostics":90
+  };
+
+  services.on('change', ()=> {
+    const total = services.val()?.reduce((sum, s)=>sum+(SERVICE_PRICES[s]||0),0) || 0;
+    priceBox.text('Estimated Total: $'+total.toFixed(2));
+  });
+
+  // Form submission
+  $('#appointment-form').on('submit', function(e){
+    e.preventDefault();
+    const form = $(this);
+    $.post(form.attr('action'), form.serialize()).done(()=>{ $('#success-message').show(); form[0].reset(); priceBox.text('Estimated Total: $0.00'); }).fail(()=>{ alert('Submission failed'); });
+  });
+});
+</script>
+</body>
+</html>
