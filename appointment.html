@@ -11,6 +11,11 @@
   <link rel="stylesheet" href="https://r.mobirisesite.com/1997632/assets/dropdown/css/style.css">
   <link rel="stylesheet" href="https://r.mobirisesite.com/1997632/assets/animatecss/animate.css">
   <link rel="stylesheet" href="https://r.mobirisesite.com/1997632/assets/theme/css/style.css">
+  <link rel="preload" href="https://fonts.googleapis.com/css?family=Inter+Tight:100,200,300,400,500,600,700,800,900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter+Tight:100,200,300,400,500,600,700,800,900&display=swap">
+  </noscript>
+  <link rel="stylesheet" href="https://r.mobirisesite.com/1997632/assets/css/mbr-additional.css" type="text/css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
@@ -41,7 +46,7 @@
 <body>
 <main>
 
-<!-- Navbar (copied exactly from home page) -->
+<!-- Navbar (exact copy from home page) -->
 <section data-bs-version="5.1" class="menu menu5 cid-v3BV98Nlzj" once="menu" id="menu05-1i">
   <nav class="navbar navbar-dropdown navbar-fixed-top navbar-expand-lg">
     <div class="container">
@@ -70,7 +75,7 @@
   </nav>
 </section>
 
-<!-- Appointment Form Section -->
+<!-- Appointment Form -->
 <section class="container">
   <div class="form-section">
     <h2>Book Your Appointment</h2>
@@ -119,14 +124,8 @@
           <label class="form-label">Engine Type</label>
           <select name="engine_type" id="engineType" class="form-select">
             <option value="">Select Engine Type</option>
-            <option>I4</option>
-            <option>I6</option>
-            <option>V6</option>
-            <option>V8</option>
-            <option>V12</option>
-            <option>Boxer</option>
-            <option>Electric / Hybrid</option>
-            <option>Other</option>
+            <option>I4</option><option>I6</option><option>V6</option><option>V8</option>
+            <option>V12</option><option>Boxer</option><option>Electric / Hybrid</option><option>Other</option>
           </select>
         </div>
       </div>
@@ -135,9 +134,8 @@
           <label class="form-label">Engine Liter</label>
           <select name="engine_liters" id="engineLiters" class="form-select">
             <option value="">Select Engine Liter</option>
-            <option>1.0</option><option>1.2</option><option>1.4</option>
-            <option>1.5</option><option>1.6</option><option>1.8</option>
-            <option>2.0</option><option>2.4</option><option>2.5</option>
+            <option>1.0</option><option>1.2</option><option>1.4</option><option>1.5</option><option>1.6</option>
+            <option>1.8</option><option>2.0</option><option>2.4</option><option>2.5</option>
             <option>3.0</option><option>3.2</option><option>3.5</option>
             <option>4.0</option><option>4.2</option><option>4.5</option>
             <option>5.0</option><option>Other</option>
@@ -202,16 +200,111 @@
 <!-- JS -->
 <script src="https://r.mobirisesite.com/1997632/assets/web/assets/jquery/jquery.min.js"></script>
 <script src="https://r.mobirisesite.com/1997632/assets/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="https://r.mobirisesite.com/1997632/assets/smoothscroll/smooth-scroll.js"></script>
-<script src="https://r.mobirisesite.com/1997632/assets/dropdown/js/navbar-dropdown.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://r.mobirisesite.com/1997632/assets/dropdown/js/navbar-dropdown.js"></script>
+<script src="https://r.mobirisesite.com/1997632/assets/theme/js/script.js"></script>
 
 <script>
-// Appointment page JS (VIN, Make/Model, Engine, Price Estimator)
 $(document).ready(function(){
   $('#year,#make,#model,#engineType,#engineLiters,#services').select2({width:'100%'});
-  // ... existing VIN lookup, price calc, etc. (same as original) ...
-});
-</script>
-</body>
-</html>
+
+  const yearSelect = $('#year');
+  const makeSelect = $('#make');
+  const modelSelect = $('#model');
+  const engineTypeSelect = $('#engineType');
+  const engineLiterSelect = $('#engineLiters');
+  const vinInput = $('#vin');
+  const vinBtn = $('#lookup-vin');
+  const vinError = $('#vin-error');
+  const vinLoading = $('#vin-loading');
+  const vinHidden = $('#vin-hidden');
+  const services = $('#services');
+  const priceBox = $('#price-box');
+
+  let vehicleData = {};
+  fetch('vehicles_us.json')
+    .then(res => res.json())
+    .then(data => vehicleData = data)
+    .catch(err => console.log("No vehicle JSON found or error:", err));
+
+  function updateMakes(){
+    const y = yearSelect.val();
+    makeSelect.empty().append(new Option('Select Make',''));
+    modelSelect.empty().append(new Option('Select Model',''));
+    if(y && vehicleData[y]){
+      Object.keys(vehicleData[y]).forEach(make => makeSelect.append(new Option(make, make)));
+    }
+    makeSelect.trigger('change.select2');
+  }
+
+  function updateModels(selectedModel){
+    const y = yearSelect.val();
+    const m = makeSelect.val();
+    modelSelect.empty().append(new Option('Select Model',''));
+    if(y && m && vehicleData[y] && vehicleData[y][m]){
+      vehicleData[y][m].forEach(mod => modelSelect.append(new Option(mod, mod)));
+    }
+    if(selectedModel){
+      if($('#model option[value="'+selectedModel+'"]').length === 0){
+        modelSelect.append(new Option(selectedModel, selectedModel));
+      }
+      modelSelect.val(selectedModel).trigger('change.select2');
+    } else { modelSelect.trigger('change.select2'); }
+  }
+
+  yearSelect.on('change', updateMakes);
+  makeSelect.on('change', function(){ updateModels(); });
+
+  function setEngineType(val){
+    if(!val) return;
+    let optionExists = $('#engineType option').filter(function(){ return $(this).val().toLowerCase() === val.toLowerCase(); }).length > 0;
+    if(!optionExists){
+      const config = val.split(' ')[0];
+      optionExists = $('#engineType option').filter(function(){ return $(this).val().toLowerCase() === config.toLowerCase(); }).length > 0;
+      if(optionExists) val = config;
+    }
+    if(!optionExists) $('#engineType').append(new Option(val,val));
+    engineTypeSelect.val(val).trigger('change.select2');
+  }
+
+  function setEngineLiter(val){
+    if(!val) return;
+    const rounded = parseFloat(val).toFixed(1);
+    if($('#engineLiters option[value="'+rounded+'"]').length === 0){
+      $('#engineLiters').append(new Option(rounded, rounded));
+    }
+    engineLiterSelect.val(rounded).trigger('change.select2');
+  }
+
+  vinBtn.on('click', function(){
+    const vin = vinInput.val().trim();
+    vinError.hide();
+    if(vin.length !== 17){ vinError.text("VIN must be 17 characters.").show(); return; }
+
+    vinLoading.show();
+    fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValues/${vin}?format=json`)
+      .then(res => res.json())
+      .then(r => {
+        vinLoading.hide();
+        const info = r.Results[0];
+        if(!info){ vinError.text("Could not decode VIN").show(); return; }
+
+        if(info.ModelYear) yearSelect.val(info.ModelYear).trigger('change.select2');
+
+        if(info.Make){
+          if($('#make option[value="'+info.Make+'"]').length === 0){
+            makeSelect.append(new Option(info.Make, info.Make));
+          }
+          makeSelect.val(info.Make).trigger('change.select2');
+        }
+
+        setTimeout(()=>{ updateModels(info.Model); },100);
+
+        let engineTypeVal = info.EngineConfiguration || '';
+        if(info.EngineCylinders) engineTypeVal += engineTypeVal ? ` ${info.EngineCylinders}` : info.EngineCylinders;
+        setEngineType(engineTypeVal);
+        setEngineLiter(info.DisplacementL);
+
+        vinHidden.val(vin);
+      })
+      .catch(()=>{ vinLoading.hide(); vinError.text("VIN lookup failed. Try
